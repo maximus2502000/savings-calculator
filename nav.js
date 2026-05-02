@@ -52,6 +52,8 @@
           <a href="/privacy" class="footer-link">Privacy</a>
           &middot;
           <a href="/about" class="footer-link">About</a>
+          &middot;
+          <a href="YOUR_GOOGLE_REVIEW_LINK_HERE" target="_blank" rel="noopener noreferrer" class="footer-link">&#11088; Review us</a>
           &middot; savingsroast.com &middot; Made with panic and spreadsheets.
         </p>
       </div>

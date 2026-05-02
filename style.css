@@ -1011,6 +1011,74 @@ body {
 }
 
 /* ============================================================
+   REVIEW SECTION
+   ============================================================ */
+.review-section {
+  padding: 64px 0;
+  background: var(--bg);
+}
+
+.review-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  border-top: 4px solid #FBBF24;
+}
+
+.review-stars {
+  font-size: 28px;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.review-card h2 {
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.review-card p {
+  font-size: 16px;
+  color: var(--text-dark-muted);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.btn-review {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: #FFFFFF;
+  color: var(--text-dark);
+  border: 2px solid #E5E7EB;
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.btn-review:hover {
+  border-color: #4285F4;
+  box-shadow: 0 4px 16px rgba(66, 133, 244, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-review .google-g {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
    CTA STRIP  (bottom of inner pages)
    ============================================================ */
 .cta-strip {
