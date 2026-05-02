@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Long Will Your Savings Last? | Free Savings Runway Calculator</title>
+  <meta name="description" content="Find out how long your savings will last, when you'll run out of money, and get a roast about your spending habits. Free savings runway calculator.">
+  <meta property="og:title" content="How Long Will Your Savings Last?">
+  <meta property="og:description" content="Enter your numbers. Get your runway. Plus a roast you didn't ask for.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://howlongwillmysavingslast.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How Long Will Your Savings Last?">
+  <meta name="twitter:description" content="Enter your numbers. Get your runway. Plus a roast you didn't ask for.">
+  <meta name="twitter:image" content="https://howlongwillmysavingslast.com/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="badge">Free &middot; No signup &middot; Instant results</div>
+      <h1>How Long Will Your<br><span class="accent">Savings Last?</span></h1>
+      <p class="subhead">Enter your numbers. Get your runway.<br>Plus a roast you didn't ask for.</p>
+      <a href="#calculator" class="btn btn-primary">Calculate My Runway &rarr;</a>
+      <p class="social-proof">Takes 30 seconds &middot; No signup &middot; <strong>No judgment</strong> (okay, a little)</p>
+    </div>
+  </section>
+
+  <!-- ===================== CALCULATOR ===================== -->
+  <section class="calculator-section" id="calculator">
+    <div class="container">
+      <div class="card form-card">
+        <h2>Your Numbers</h2>
+
+        <form id="calculator-form" novalidate>
+
+          <div class="field-group">
+            <label for="savings">Current Savings</label>
+            <div class="input-wrapper">
+              <span class="prefix" aria-hidden="true">$</span>
+              <input
+                type="text"
+                id="savings"
+                name="savings"
+                inputmode="decimal"
+                placeholder="10,000"
+                autocomplete="off"
+                aria-required="true"
+              >
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="spending">Monthly Spending</label>
+            <div class="input-wrapper">
+              <span class="prefix" aria-hidden="true">$</span>
+              <input
+                type="text"
+                id="spending"
+                name="spending"
+                inputmode="decimal"
+                placeholder="2,500"
+                autocomplete="off"
+                aria-required="true"
+              >
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="income">
+              Monthly Income
+              <span class="optional">(optional)</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="prefix" aria-hidden="true">$</span>
+              <input
+                type="text"
+                id="income"
+                name="income"
+                inputmode="decimal"
+                placeholder="0"
+                autocomplete="off"
+              >
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label id="roast-label">Roast Level</label>
+            <div class="roast-toggle" role="group" aria-labelledby="roast-label">
+              <button type="button" class="roast-btn active" data-level="gentle" aria-pressed="true">&#128524; Gentle</button>
+              <button type="button" class="roast-btn" data-level="spicy" aria-pressed="false">&#127798; Spicy</button>
+              <button type="button" class="roast-btn" data-level="savage" aria-pressed="false">&#128128; Savage</button>
+            </div>
+          </div>
+
+          <div id="error-msg" class="error-msg" role="alert" aria-live="polite"></div>
+
+          <button type="submit" class="btn btn-primary btn-full">Show Me the Truth &rarr;</button>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="results-section" id="results" aria-live="polite" aria-atomic="true">
+    <div class="container">
+
+      <div class="card result-card" id="result-card">
+        <div class="result-header">
+          <span class="result-label">&#10022; YOUR SAVINGS RUNWAY</span>
+          <p class="nickname" id="result-nickname"></p>
+        </div>
+
+        <div class="stat-grid" id="stat-grid">
+          <!-- injected by JS -->
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="roast-block">
+          <span class="section-label">&#128293; Your Roast</span>
+          <p class="roast-text" id="result-roast"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="tips-block">
+          <span class="section-label">&#128161; 3 Ways to Stretch Further</span>
+          <ol class="tips-list" id="result-tips"></ol>
+        </div>
+
+        <p class="watermark">howlongwillmysavingslast.com</p>
+      </div>
+
+      <div class="share-row">
+        <button class="btn btn-secondary" id="copy-btn" onclick="copyResult()">&#128203; Copy My Result</button>
+        <button class="btn btn-secondary" id="copy-roast-btn" onclick="copyRoast()">&#9988;&#65039; Copy the Roast</button>
+        <button class="btn btn-secondary" id="tweet-btn" onclick="tweetResult()">&#128038; Tweet My Shame</button>
+        <button class="btn btn-outline" onclick="resetForm()">&#8617; Try Again</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <h2>Common Questions</h2>
+      <div class="faq-list" id="faq-list">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <p class="disclaimer">
+        &#9888;&#65039; This tool is for entertainment and general estimation only.
+        Not financial advice. Talk to a real human if money is stressful.
+      </p>
+      <p class="footer-tag">howlongwillmysavingslast.com &middot; Made with panic and spreadsheets.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
