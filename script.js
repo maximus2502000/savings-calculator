@@ -498,7 +498,7 @@ function buildFullCopyText() {
     '💡 What I’m doing about it:',
     tips,
     '',
-    'howlongwillmysavingslast.com',
+    'savingsroast.com',
   ].join('\n');
 }
 
@@ -510,7 +510,7 @@ function buildShortCopyText() {
     ? 'just found out my income covers my spending \u{1F9EA}'
     : `just found out my savings last ${result.months} month${result.months !== 1 ? 's' : ''} 💩`;
 
-  return `${intro}\n\n“${roast}”\n\nhowlongwillmysavingslast.com`;
+  return `${intro}\n\n“${roast}”\n\nsavingsroast.com`;
 }
 
 function copyResult() {
@@ -551,7 +551,7 @@ function tweetResult() {
     ? 'My income covers my spending 👀'
     : `My savings last ${result.months} month${result.months !== 1 ? 's' : ''} 💩`;
 
-  const tweet = `${stats} — I’m ${nickname}\n\nHow long do yours last?\nhowlongwillmysavingslast.com\n\n#SavingsRunway`;
+  const tweet = `${stats} — I’m ${nickname}\n\nHow long do yours last?\nsavingsroast.com\n\n#SavingsRunway`;
 
   window.open(
     `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`,
