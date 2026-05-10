@@ -795,8 +795,15 @@ function resetForm() {
   if (prompt) prompt.style.display = '';
   const whatif  = document.getElementById('whatif-section');
   if (whatif) whatif.style.display = 'none';
-  const proj    = document.getElementById('projection-section');
-  if (proj) proj.style.display = 'none';
+  // Restore projection placeholder state
+  const projPlaceholder = document.getElementById('projection-placeholder');
+  const projChartWrap   = document.getElementById('projection-chart-wrap');
+  const projSummary     = document.getElementById('projection-summary');
+  const projMilest      = document.getElementById('projection-milestones');
+  if (projPlaceholder) projPlaceholder.style.display = '';
+  if (projChartWrap)   projChartWrap.style.display   = 'none';
+  if (projSummary)     projSummary.style.display     = 'none';
+  if (projMilest)      projMilest.style.display      = 'none';
 
   document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -962,13 +969,14 @@ function getMilestoneBalance(points, targetMonth) {
   return Math.max(0, Math.round(before.balance + ratio * (after.balance - before.balance)));
 }
 
-/** Entry point — populates the graph card. */
+/** Entry point — swaps placeholder for live chart content. */
 function renderSavingsGraph(result) {
-  const section   = document.getElementById('projection-section');
-  const svgEl     = document.getElementById('projection-svg');
-  const summaryEl = document.getElementById('projection-summary');
-  const milestEl  = document.getElementById('projection-milestones');
-  if (!section || !svgEl) return;
+  const svgEl       = document.getElementById('projection-svg');
+  const chartWrap   = document.getElementById('projection-chart-wrap');
+  const placeholder = document.getElementById('projection-placeholder');
+  const summaryEl   = document.getElementById('projection-summary');
+  const milestEl    = document.getElementById('projection-milestones');
+  if (!svgEl) return;
 
   const { savings, spending, income } = result;
   const burn   = spending - income;
@@ -977,15 +985,14 @@ function renderSavingsGraph(result) {
   // SVG chart
   svgEl.innerHTML = buildSVGChart(points, burn);
 
-  // Plain-English summary (accessible text alternative to chart)
+  // Plain-English summary (accessible text alternative)
   if (summaryEl) {
-    summaryEl.textContent         = buildProjectionSummary(savings, burn, points);
+    summaryEl.textContent           = buildProjectionSummary(savings, burn, points);
     summaryEl.style.borderLeftColor = burn > 0 ? 'var(--accent-savage)'
-      : burn < 0  ? 'var(--accent-gentle)'
-      :               'var(--accent)';
-    summaryEl.style.background    = burn > 0 ? '#FEF2F2'
-      : burn < 0  ? '#F0FDF4'
-      :               '#F5F3FF';
+      : burn < 0 ? 'var(--accent-gentle)' : 'var(--accent)';
+    summaryEl.style.background      = burn > 0 ? '#FEF2F2'
+      : burn < 0 ? '#F0FDF4' : '#F5F3FF';
+    summaryEl.style.display         = '';
   }
 
   // Milestone cards (3, 6, 12 months)
@@ -997,9 +1004,12 @@ function renderSavingsGraph(result) {
         <span class="milestone-balance">$${bal.toLocaleString()}</span>
       </div>`;
     }).join('');
+    milestEl.style.display = '';
   }
 
-  section.style.display = '';
+  // Swap placeholder for chart
+  if (placeholder) placeholder.style.display = 'none';
+  if (chartWrap)   chartWrap.style.display   = '';
 }
 
 /** Plain-English summary string. */

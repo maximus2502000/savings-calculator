@@ -291,10 +291,18 @@
           <p class="watermark">savingsroast.com</p>
         </div>
 
-        <!-- RIGHT: Savings Projection Graph -->
-        <div class="card projection-card" id="projection-section" style="display:none">
+        <!-- RIGHT: Savings Projection Graph (always in grid; content filled by JS) -->
+        <div class="card projection-card" id="projection-section">
           <h3 class="projection-title">&#128200; Your Savings Projection</h3>
-          <div class="projection-chart-wrap">
+
+          <!-- Placeholder shown before first calculation -->
+          <div class="projection-placeholder" id="projection-placeholder">
+            <span class="projection-placeholder-icon" aria-hidden="true">&#128202;</span>
+            <p>Your savings projection chart will appear here after you calculate your result.</p>
+          </div>
+
+          <!-- Chart — hidden until JS fills it in -->
+          <div class="projection-chart-wrap" id="projection-chart-wrap" style="display:none">
             <svg
               id="projection-svg"
               viewBox="0 0 540 220"
@@ -303,8 +311,9 @@
               focusable="false"
             ></svg>
           </div>
-          <p id="projection-summary" class="projection-summary"></p>
-          <div class="milestone-grid" id="projection-milestones" aria-label="Projected savings at key milestones"></div>
+
+          <p id="projection-summary" class="projection-summary" style="display:none"></p>
+          <div class="milestone-grid" id="projection-milestones" style="display:none" aria-label="Projected savings at key milestones"></div>
         </div>
 
       </div>

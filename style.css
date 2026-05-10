@@ -964,7 +964,34 @@ body {
 /* ============================================================
    SAVINGS PROJECTION GRAPH
    ============================================================ */
-.projection-card { margin-top: 20px; }
+/* Projection card sits in the grid alongside the result card — no extra margin needed */
+.projection-card { }
+
+/* Placeholder shown before calculation */
+.projection-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 220px;
+  text-align: center;
+  color: var(--text-dark-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 24px;
+}
+
+.projection-placeholder-icon {
+  font-size: 40px;
+  opacity: 0.4;
+}
+
+/* Both cards animate in together */
+.results-section.visible .result-card,
+.results-section.visible .projection-card {
+  animation: slideUp 0.4s ease forwards;
+}
 
 .projection-title {
   font-size: 18px;
@@ -1660,9 +1687,7 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.results-section.visible .result-card {
-  animation: slideUp 0.4s ease forwards;
-}
+/* animation handled in SAVINGS PROJECTION GRAPH section above */
 
 .results-section.visible .share-row {
   animation: slideUp 0.4s ease 0.1s both;
