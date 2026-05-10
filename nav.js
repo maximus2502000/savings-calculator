@@ -6,14 +6,16 @@
   const path = window.location.pathname.replace(/\/$/, '') || '/';
 
   const LINKS = [
-    { href: '/',        label: 'Calculator' },
-    { href: '/tips',    label: 'Tips'       },
-    { href: '/about',   label: 'About'      },
+    { href: '/#calculator', label: 'Calculator' },
+    { href: '/tips',        label: 'Tips'       },
+    { href: '/about',       label: 'About'      },
   ];
 
   function isActive(href) {
-    if (href === '/') return path === '' || path === '/';
-    return path === href || path.startsWith(href + '/');
+    // Strip the fragment (#...) before comparing paths
+    const hrefPath = href.split('#')[0] || '/';
+    if (hrefPath === '/') return path === '' || path === '/';
+    return path === hrefPath || path.startsWith(hrefPath + '/');
   }
 
   /* ── NAV ─────────────────────────────────────────────────── */
