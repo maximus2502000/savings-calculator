@@ -195,36 +195,8 @@ const LOADING_LINES = [
   "Almost ready…",
 ];
 
-/* ============================================================
-   DATA — FAQ
-   ============================================================ */
-
-const FAQS = [
-  {
-    q: "How is this calculated?",
-    a: "We calculate your net monthly burn rate — spending minus income. Then we divide your savings by that number to get your runway. Simple division, honest truth.",
-  },
-  {
-    q: "What does adding monthly income change?",
-    a: "Income reduces your burn rate. If you earn $3,000 per month and spend $3,000 per month, your burn is zero — your savings last indefinitely at current levels.",
-  },
-  {
-    q: "Does this account for inflation or investment returns?",
-    a: "No. This is a simple linear projection. Inflation, investment growth, and life events are not factored in. Think of it as a baseline snapshot of your current trajectory — useful, not complete.",
-  },
-  {
-    q: "Is my data saved anywhere?",
-    a: "No. All calculations happen in your browser. Nothing is sent to a server, stored, or tracked. Your numbers stay your numbers.",
-  },
-  {
-    q: "What is the difference between the modes?",
-    a: "Roast Me gives you the funny, spicy feedback focused on spending habits. Coach Me gives you supportive, practical advice. Roast + Coach gives you both — the roast and the roadmap.",
-  },
-  {
-    q: "Is this financial advice?",
-    a: "No. This tool is for general estimation and entertainment only. The roasts are jokes. The tips are general guidance. For decisions involving significant money, speak to a qualified financial advisor.",
-  },
-];
+/* FAQ content is now static HTML in index.html for SEO indexability.
+   toggleFAQ() below handles accordion behaviour. */
 
 /* ============================================================
    STATE
@@ -243,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModeToggle();
   initForm();
   initInputFormatting();
-  renderFAQ();
+  // FAQ is static HTML — no renderFAQ() needed
 });
 
 /* ============================================================
@@ -260,6 +232,7 @@ function initModeToggle() {
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
       currentMode = btn.dataset.mode;
+      trackEvent('tone_selected', { mode: currentMode });
     });
   });
 }
@@ -396,11 +369,12 @@ function handleSubmit() {
   const incomeEl   = document.getElementById('income');
   const errorEl    = document.getElementById('error-msg');
 
-  // Clear all previous error states
+  // Clear all previous error states and aria-invalid
   if (errorEl) errorEl.classList.remove('visible');
-  [savingsEl, spendingEl, incomeEl].filter(Boolean).forEach(el =>
-    el.closest('.input-wrapper').classList.remove('has-error')
-  );
+  [savingsEl, spendingEl, incomeEl].filter(Boolean).forEach(el => {
+    el.closest('.input-wrapper').classList.remove('has-error');
+    el.removeAttribute('aria-invalid');
+  });
 
   const savingsRaw  = savingsEl  ? savingsEl.value.replace(/,/g, '').trim()  : '';
   const spendingRaw = spendingEl ? spendingEl.value.replace(/,/g, '').trim() : '';
@@ -431,6 +405,7 @@ function handleSubmit() {
     if (errorEl) { errorEl.textContent = errorMsg; errorEl.classList.add('visible'); }
     if (errorField) {
       errorField.closest('.input-wrapper').classList.add('has-error');
+      errorField.setAttribute('aria-invalid', 'true');
       errorField.focus();
     }
     Analytics.track('form_error', { reason: 'validation_failed' });
@@ -643,6 +618,7 @@ function renderResult(result, content) {
     tier:       tierId,
     calc_count: sessionCalcCount,
   });
+  trackEvent('result_generated', { tier: tierId, mode: currentMode });
 
   requestAnimationFrame(() => {
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -879,32 +855,17 @@ function showToast(message) {
 }
 
 /* ============================================================
-   FAQ
+   ANALYTICS — PUBLIC API
    ============================================================ */
 
-function renderFAQ() {
-  const list = document.getElementById('faq-list');
-  if (!list) return;
-  list.innerHTML = FAQS.map((item, i) => `
-    <div class="faq-item" id="faq-${i}">
-      <button
-        class="faq-question"
-        aria-expanded="false"
-        aria-controls="faq-answer-${i}"
-        onclick="toggleFAQ(${i})"
-      >
-        ${escapeHTML(item.q)}
-        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-      <div class="faq-answer" id="faq-answer-${i}" role="region">
-        ${escapeHTML(item.a)}
-      </div>
-    </div>
-  `).join('');
+// trackEvent is a clean public wrapper — swap Analytics.track for any provider
+function trackEvent(eventName, props = {}) {
+  Analytics.track(eventName, props);
 }
+
+/* ============================================================
+   FAQ ACCORDION  (content is static HTML; JS handles open/close)
+   ============================================================ */
 
 function toggleFAQ(index) {
   const item   = document.getElementById(`faq-${index}`);

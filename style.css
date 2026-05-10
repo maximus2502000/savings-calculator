@@ -43,6 +43,79 @@
 }
 
 /* ============================================================
+   SKIP LINK  (accessibility — keyboard users)
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  width: auto;
+  height: auto;
+  padding: 10px 20px;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 8px;
+  z-index: 10000;
+  outline: 3px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   FOCUS STATES  (keyboard navigation)
+   ============================================================ */
+
+/* Remove browser default, apply our own */
+*:focus { outline: none; }
+
+*:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Buttons on dark backgrounds (hero) */
+.hero .btn:focus-visible {
+  outline-color: #FCD34D;
+}
+
+/* Form inputs — use the existing ring style already in place */
+.input-wrapper input:focus-visible {
+  outline: none; /* ring handled by box-shadow in input styles */
+}
+
+/* Mode toggle buttons */
+.mode-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* FAQ questions */
+.faq-question:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* Share row buttons */
+.share-row .btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ============================================================
    RESET & BASE
    ============================================================ */
 *, *::before, *::after {

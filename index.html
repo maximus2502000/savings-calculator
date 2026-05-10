@@ -3,26 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How Long Will Your Savings Last? | Free Savings Runway Calculator</title>
-  <meta name="description" content="Find out exactly how long your savings will last. Enter your spending and income, get your runway, a spending nickname, a roast, and three tips to fix it. Free — no signup, no bank login.">
-  <meta property="og:title" content="How Long Will Your Savings Last?">
-  <meta property="og:description" content="Enter your numbers. Get your runway. Plus a roast you didn't ask for.">
+
+  <!-- SEO: title and description -->
+  <title>How Long Will My Savings Last? Free Savings Runway Calculator</title>
+  <meta name="description" content="Enter your savings, spending, and income to see how long your money will last. Get your savings runway, practical tips, and a funny financial roast. Free — no signup, no bank login.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="How Long Will My Savings Last? Free Savings Runway Calculator">
+  <meta property="og:description" content="Enter your savings, spending, and income to see how long your money will last. Get your runway, practical tips, and a funny financial roast.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://savingsroast.com">
   <meta property="og:image" content="https://savingsroast.com/og-image.png">
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="How Long Will Your Savings Last?">
+  <meta name="twitter:title" content="How Long Will My Savings Last?">
   <meta name="twitter:description" content="Enter your numbers. Get your runway. Plus a roast you didn't ask for.">
   <meta name="twitter:image" content="https://savingsroast.com/og-image.png">
+
   <link rel="canonical" href="https://savingsroast.com">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2034224714901769" crossorigin="anonymous"></script>
+
+  <!-- Schema: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Savings Roast",
+    "url": "https://savingsroast.com",
+    "description": "Free savings runway calculator. Find out how long your savings will last based on your spending and income. Get a spending nickname, a funny roast, and practical money tips.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Savings runway calculator",
+      "Monthly burn rate calculator",
+      "Financial roast generator",
+      "What-if spending simulator",
+      "Downloadable share card"
+    ]
+  }
+  </script>
+
+  <!-- Schema: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long will my savings last?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your savings last as long as your monthly burn rate allows. Burn rate is monthly spending minus monthly income. Divide your total savings by that number to get your runway in months. For example, $10,000 in savings with a $1,000 monthly burn rate gives 10 months of runway. If income covers spending, your savings are stable indefinitely."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a savings runway?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A savings runway is the number of months your savings would last if your income and spending stayed the same. The term comes from startup finance, where founders track how many months of cash remain before running dry. Applied personally, knowing your runway turns a vague worry about money into a specific, actionable number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate monthly burn rate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Monthly burn rate equals monthly spending minus monthly income. If you spend $3,000 per month and earn $1,500, your burn rate is $1,500. A positive burn rate means savings are shrinking each month. Zero or negative means income covers everything and savings are stable or growing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does income count in the calculation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Income reduces your effective burn rate. If you spend $2,500 and earn $1,500 per month, only $1,000 actually comes from savings each month — not $2,500. If income matches or exceeds spending, your runway is indefinite at current levels."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I make my savings last longer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Two levers: spend less or earn more. Quick wins include cancelling unused subscriptions, cooking at home more often, and setting an automatic savings transfer on payday. Even $200 per month less in spending meaningfully extends your runway. The What If section on this tool shows exactly how much each change would add."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much emergency savings should I have?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The standard guideline is 3 to 6 months of living expenses in an accessible account. If you are self-employed, have dependants, or work in a less stable industry, aim for 6 to 12 months. Emergency savings should be separate from investment accounts and kept in a high-yield savings account for quick access."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this financial advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Savings Roast is a free estimation tool for general education and entertainment only. The calculation is simple arithmetic and does not account for inflation, investment returns, tax changes, or unexpected life events. For decisions involving significant money, please speak to a qualified financial advisor."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+
+  <!-- Skip navigation for keyboard users -->
+  <a class="skip-link" href="#calculator">Skip to calculator</a>
 
   <div id="nav-root"></div>
   <script src="/nav.js"></script>
@@ -96,6 +203,7 @@
                 placeholder="2,500"
                 autocomplete="off"
                 aria-required="true"
+                aria-describedby="error-msg"
               >
             </div>
           </div>
@@ -129,7 +237,7 @@
             </div>
           </div>
 
-          <div id="error-msg" class="error-msg" role="alert" aria-live="polite"></div>
+          <div id="error-msg" class="error-msg" role="alert" aria-live="assertive"></div>
 
           <button type="submit" class="btn btn-primary btn-full">Calculate My Financial Fate &rarr;</button>
 
@@ -139,7 +247,7 @@
   </section>
 
   <!-- ===================== RESULTS ===================== -->
-  <section class="results-section" id="results" aria-live="polite" aria-atomic="true">
+  <section class="results-section" id="results" aria-live="polite" aria-atomic="false" aria-label="Your savings runway result">
     <div class="container">
 
       <div class="card result-card" id="result-card">
@@ -151,7 +259,7 @@
           <p class="result-duration" id="result-duration"></p>
           <span class="result-status-badge" id="result-status-badge"></span>
           <div class="result-badge-wrap" id="result-badge-wrap">
-            <span class="result-badge-emoji" id="result-badge-emoji"></span>
+            <span class="result-badge-emoji" id="result-badge-emoji" aria-hidden="true"></span>
             <div class="result-badge-text">
               <span class="result-badge-rank-label">Your Rank</span>
               <span class="result-badge-label" id="result-badge-label"></span>
@@ -160,7 +268,7 @@
         </div>
 
         <!-- Stats -->
-        <div class="stat-grid" id="stat-grid"></div>
+        <div class="stat-grid" id="stat-grid" aria-label="Key statistics"></div>
 
         <div class="divider"></div>
 
@@ -186,17 +294,17 @@
         <p class="watermark">savingsroast.com</p>
       </div>
 
-      <div class="share-row">
+      <div class="share-row" role="group" aria-label="Share your result">
         <button class="btn btn-secondary" id="copy-btn" onclick="copyResult()">&#128203; Copy My Result</button>
         <button class="btn btn-secondary" id="copy-roast-btn" onclick="copyRoast()">&#9988;&#65039; Copy the Roast</button>
         <button class="btn btn-secondary" id="tweet-btn" onclick="tweetResult()">&#128038; Tweet My Shame</button>
-        <button class="btn btn-secondary" onclick="copyLink()">&#128279; Copy Link</button>
-        <button class="btn btn-secondary" onclick="downloadShareCard()">&#11015;&#65039; Download Card</button>
+        <button class="btn btn-secondary" onclick="copyLink()" aria-label="Copy link to savingsroast.com">&#128279; Copy Link</button>
+        <button class="btn btn-secondary" onclick="downloadShareCard()" aria-label="Download result as a shareable image card">&#11015;&#65039; Download Card</button>
         <button class="btn btn-outline" onclick="resetForm()">&#8617; Try Again</button>
       </div>
 
-      <!-- What-If section -->
-      <div class="card whatif-card" id="whatif-section" style="display:none">
+      <!-- What-If simulator -->
+      <div class="card whatif-card" id="whatif-section" style="display:none" aria-label="Savings runway simulator">
         <h3 class="whatif-title">What If I Changed Things?</h3>
         <p class="whatif-sub">See how small adjustments extend your runway.</p>
         <div class="whatif-grid" id="whatif-grid"></div>
@@ -206,19 +314,90 @@
   </section>
 
   <!-- ===================== CALC PROMPT ===================== -->
-  <div class="calc-prompt" id="calc-prompt">
+  <div class="calc-prompt" id="calc-prompt" aria-hidden="true">
     <div class="calc-prompt-inner">
-      <span>&#128200;</span>
+      <span aria-hidden="true">&#128200;</span>
       <span>Enter your numbers above to reveal your savings runway.</span>
     </div>
   </div>
 
   <!-- ===================== FAQ ===================== -->
+  <!-- Static HTML so search engines can index content without JavaScript -->
   <section class="faq-section" id="faq">
     <div class="container">
-      <h2>FAQ</h2>
-      <div class="faq-list" id="faq-list">
-        <!-- injected by JS -->
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item" id="faq-0">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-0" onclick="toggleFAQ(0)">
+            How long will my savings last?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-0" role="region" aria-labelledby="faq-0">
+            Your savings last as long as your monthly burn rate allows. Burn rate is monthly spending minus monthly income. Divide your total savings by that number to get your runway in months. For example, $10,000 in savings with a $1,000 monthly burn rate gives you 10 months. If your income covers your spending, your savings are stable indefinitely at current rates.
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-1">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1" onclick="toggleFAQ(1)">
+            What is a savings runway?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-1">
+            A savings runway is the number of months your savings would last if your income and spending stayed the same. The term comes from startup finance, where founders count how many months of cash remain before running dry. Applied to personal finance, knowing your runway turns a vague worry about money into a specific, actionable number.
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-2">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2" onclick="toggleFAQ(2)">
+            How do I calculate monthly burn rate?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-2">
+            Monthly burn rate = monthly spending minus monthly income. If you spend $3,000 per month and earn $1,500, your burn rate is $1,500. A positive burn rate means savings are shrinking each month. Zero or negative means income covers everything and savings are stable or growing.
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-3">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3" onclick="toggleFAQ(3)">
+            Does income count in the calculation?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-3">
+            Yes. Income reduces your effective burn rate. If you spend $2,500 and earn $1,500 per month, only $1,000 actually comes from savings each month — not $2,500. If income matches or exceeds spending, your runway is indefinite at current levels. Add any regular monthly income you receive for a more accurate result.
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-4">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4" onclick="toggleFAQ(4)">
+            How can I make my savings last longer?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-4">
+            Two levers: spend less or earn more. Quick wins include cancelling unused subscriptions, cooking at home more often, and setting an automatic savings transfer on payday. Even $200 per month less in spending meaningfully extends your runway. The What If section below your result shows exactly how much each change would add.
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-5">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5" onclick="toggleFAQ(5)">
+            How much emergency savings should I have?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-5" role="region" aria-labelledby="faq-5">
+            The standard guideline is 3 to 6 months of living expenses in an accessible account. If you are self-employed, have dependants, or work in a less stable industry, aim for 6 to 12 months. Emergency savings should be separate from investment accounts and kept in a high-yield savings account for quick access without penalties.
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq-6">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6" onclick="toggleFAQ(6)">
+            Is this financial advice?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-6" role="region" aria-labelledby="faq-6">
+            No. Savings Roast is a free estimation tool for general education and entertainment only. The calculation is simple arithmetic and does not account for inflation, investment returns, tax changes, or unexpected life events. For decisions involving significant money, please speak to a qualified financial advisor.
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
