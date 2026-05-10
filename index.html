@@ -121,11 +121,11 @@
           </div>
 
           <div class="field-group">
-            <label id="roast-label">Roast Level</label>
-            <div class="roast-toggle" role="group" aria-labelledby="roast-label">
-              <button type="button" class="roast-btn active" data-level="gentle" aria-pressed="true">&#128524; Gentle</button>
-              <button type="button" class="roast-btn" data-level="spicy" aria-pressed="false">&#127798; Spicy</button>
-              <button type="button" class="roast-btn" data-level="savage" aria-pressed="false">&#128128; Savage</button>
+            <label id="mode-label">Mode</label>
+            <div class="mode-toggle" role="group" aria-labelledby="mode-label">
+              <button type="button" class="mode-btn" data-mode="roast" aria-pressed="false">&#128293; Roast Me</button>
+              <button type="button" class="mode-btn" data-mode="coach" aria-pressed="false">&#128161; Coach Me</button>
+              <button type="button" class="mode-btn active" data-mode="both" aria-pressed="true">&#128293;&#128161; Roast + Coach</button>
             </div>
           </div>
 
@@ -143,28 +143,38 @@
     <div class="container">
 
       <div class="card result-card" id="result-card">
-        <div class="result-header">
+
+        <!-- Headline -->
+        <div class="result-headline-section">
           <span class="result-label">&#10022; YOUR SAVINGS RUNWAY</span>
-          <p class="nickname" id="result-nickname"></p>
+          <p class="result-headline" id="result-headline">Your savings will last about</p>
+          <p class="result-duration" id="result-duration"></p>
+          <span class="result-status-badge" id="result-status-badge"></span>
         </div>
 
-        <div class="stat-grid" id="stat-grid">
-          <!-- injected by JS -->
-        </div>
+        <!-- Stats -->
+        <div class="stat-grid" id="stat-grid"></div>
 
         <div class="divider"></div>
 
-        <div class="roast-block">
+        <!-- Identity nickname -->
+        <p class="nickname" id="result-nickname"></p>
+
+        <!-- Roast block (shown for roast / both modes) -->
+        <div id="roast-block">
           <span class="section-label">&#128293; Your Roast</span>
           <p class="roast-text" id="result-roast"></p>
         </div>
 
-        <div class="divider"></div>
-
-        <div class="tips-block">
+        <!-- Coach block (shown for coach / both modes) -->
+        <div id="coach-block">
           <span class="section-label">&#128161; 3 Ways to Stretch Further</span>
+          <p class="coach-intro" id="coach-intro"></p>
           <ol class="tips-list" id="result-tips"></ol>
         </div>
+
+        <!-- Disclaimer -->
+        <p class="result-disclaimer">This tool is for education and entertainment only. It is not financial advice.</p>
 
         <p class="watermark">savingsroast.com</p>
       </div>
@@ -178,6 +188,14 @@
 
     </div>
   </section>
+
+  <!-- ===================== CALC PROMPT ===================== -->
+  <div class="calc-prompt" id="calc-prompt">
+    <div class="calc-prompt-inner">
+      <span>&#128200;</span>
+      <span>Enter your numbers above to reveal your savings runway.</span>
+    </div>
+  </div>
 
   <!-- ===================== FAQ ===================== -->
   <section class="faq-section" id="faq">
