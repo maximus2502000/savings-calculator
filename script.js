@@ -608,6 +608,9 @@ function renderResult(result, content) {
   // Render What-If section
   renderWhatIf(result);
 
+  // Render savings projection graph
+  renderSavingsGraph(result);
+
   // Animate in
   section.classList.remove('visible');
   void section.offsetWidth;
@@ -787,11 +790,13 @@ function resetForm() {
   document.getElementById('error-msg')?.classList.remove('visible');
   lastResult = null;
 
-  // Restore calc-prompt, hide what-if
+  // Restore calc-prompt, hide what-if and projection
   const prompt  = document.getElementById('calc-prompt');
   if (prompt) prompt.style.display = '';
   const whatif  = document.getElementById('whatif-section');
   if (whatif) whatif.style.display = 'none';
+  const proj    = document.getElementById('projection-section');
+  if (proj) proj.style.display = 'none';
 
   document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -898,6 +903,192 @@ const Analytics = {
     }
   },
 };
+
+/* ============================================================
+   SAVINGS PROJECTION GRAPH
+   ============================================================ */
+
+/**
+ * generateSavingsProjection
+ * Returns an array of { month, balance } data points.
+ * - burn > 0 : savings decrease → project until $0 (max 36 months)
+ * - burn = 0 : flat line → 12 months
+ * - burn < 0 : savings grow  → 12 months
+ * Balance is always clamped to 0 (never negative).
+ */
+function generateSavingsProjection(savings, spending, income) {
+  const burn   = spending - income;
+  const points = [];
+
+  if (savings <= 0 && burn >= 0) {
+    // Already at $0 and still burning — flat at zero
+    return [{ month: 0, balance: 0 }, { month: 6, balance: 0 }, { month: 12, balance: 0 }];
+  }
+
+  if (burn > 0) {
+    const naturalEnd = Math.ceil(savings / burn);
+    const maxM       = Math.min(naturalEnd, 36);
+    for (let m = 0; m <= maxM; m++) {
+      const bal = Math.max(0, savings - burn * m);
+      points.push({ month: m, balance: Math.round(bal) });
+      if (bal <= 0) break;
+    }
+  } else if (burn === 0) {
+    for (let m = 0; m <= 12; m++) {
+      points.push({ month: m, balance: Math.round(savings) });
+    }
+  } else {
+    const surplus = Math.abs(burn);
+    for (let m = 0; m <= 12; m++) {
+      points.push({ month: m, balance: Math.round(savings + surplus * m) });
+    }
+  }
+
+  return points;
+}
+
+/** Linear-interpolate (or clamp) to find balance at an arbitrary target month. */
+function getMilestoneBalance(points, targetMonth) {
+  const exact = points.find(p => p.month === targetMonth);
+  if (exact !== undefined) return exact.balance;
+
+  const last = points[points.length - 1];
+  if (targetMonth > last.month) return last.balance; // clamped at end
+
+  const before = [...points].reverse().find(p => p.month <= targetMonth);
+  const after  = points.find(p => p.month >= targetMonth);
+  if (!before || !after || before.month === after.month) return before?.balance ?? 0;
+  const ratio = (targetMonth - before.month) / (after.month - before.month);
+  return Math.max(0, Math.round(before.balance + ratio * (after.balance - before.balance)));
+}
+
+/** Entry point — populates the graph card. */
+function renderSavingsGraph(result) {
+  const section   = document.getElementById('projection-section');
+  const svgEl     = document.getElementById('projection-svg');
+  const summaryEl = document.getElementById('projection-summary');
+  const milestEl  = document.getElementById('projection-milestones');
+  if (!section || !svgEl) return;
+
+  const { savings, spending, income } = result;
+  const burn   = spending - income;
+  const points = generateSavingsProjection(savings, spending, income);
+
+  // SVG chart
+  svgEl.innerHTML = buildSVGChart(points, burn);
+
+  // Plain-English summary (accessible text alternative to chart)
+  if (summaryEl) {
+    summaryEl.textContent         = buildProjectionSummary(savings, burn, points);
+    summaryEl.style.borderLeftColor = burn > 0 ? 'var(--accent-savage)'
+      : burn < 0  ? 'var(--accent-gentle)'
+      :               'var(--accent)';
+    summaryEl.style.background    = burn > 0 ? '#FEF2F2'
+      : burn < 0  ? '#F0FDF4'
+      :               '#F5F3FF';
+  }
+
+  // Milestone cards (3, 6, 12 months)
+  if (milestEl) {
+    milestEl.innerHTML = [3, 6, 12].map(m => {
+      const bal = getMilestoneBalance(points, m);
+      return `<div class="milestone-card">
+        <span class="milestone-month">In ${m} months</span>
+        <span class="milestone-balance">$${bal.toLocaleString()}</span>
+      </div>`;
+    }).join('');
+  }
+
+  section.style.display = '';
+}
+
+/** Plain-English summary string. */
+function buildProjectionSummary(savings, burn, points) {
+  const fmt = n => `$${Math.round(Math.abs(n)).toLocaleString()}`;
+
+  if (savings <= 0 && burn >= 0) {
+    return 'Your savings are already at $0. Without income that covers your spending, any expenses will require borrowing.';
+  }
+  if (burn > 0) {
+    const last = points[points.length - 1];
+    const mo   = last.month;
+    return `Based on your current numbers, your savings are projected to fall from ${fmt(savings)} to $0 in about ${mo} month${mo !== 1 ? 's' : ''}.`;
+  }
+  if (burn === 0) {
+    return `Your income exactly covers your spending, so your savings are projected to stay steady at ${fmt(savings)}.`;
+  }
+  return `Your income exceeds your spending, so your savings are projected to grow by about ${fmt(Math.abs(burn))}/month.`;
+}
+
+/** Build the SVG markup as a string — no external libraries. */
+function buildSVGChart(points, burn) {
+  const W   = 540, H = 220;
+  const PAD = { top: 20, right: 20, bottom: 38, left: 60 };
+  const cW  = W - PAD.left - PAD.right;
+  const cH  = H - PAD.top  - PAD.bottom;
+
+  const maxBal  = Math.max(...points.map(p => p.balance), 1);
+  const maxMo   = Math.max(points[points.length - 1].month, 1);
+
+  const sx = m => PAD.left + (m / maxMo) * cW;
+  const sy = b => PAD.top  + cH - (b / maxBal) * cH;
+
+  const colour = burn > 0 ? '#EF4444' : burn < 0 ? '#22C55E' : '#6366F1';
+
+  // Line and fill paths
+  const linePath = points.map((p, i) =>
+    `${i === 0 ? 'M' : 'L'}${sx(p.month).toFixed(1)},${sy(p.balance).toFixed(1)}`
+  ).join(' ');
+  const fillPath = `${linePath} L${sx(maxMo).toFixed(1)},${(PAD.top + cH).toFixed(1)} L${PAD.left},${(PAD.top + cH).toFixed(1)} Z`;
+
+  // Y-axis ticks (5 levels from 0 to max)
+  const yTicks = [0, 0.25, 0.5, 0.75, 1].map(f => Math.round(maxBal * f));
+  const fmtY   = v => {
+    if (v === 0) return '$0';
+    if (v >= 10000) return `$${Math.round(v / 1000)}k`;
+    if (v >= 1000)  return `$${(v / 1000).toFixed(1).replace(/\.0$/, '')}k`;
+    return `$${v}`;
+  };
+
+  // X-axis ticks — spacing adapts to range
+  const xStep  = maxMo <= 6 ? 1 : maxMo <= 12 ? 2 : maxMo <= 24 ? 4 : 6;
+  const xTicks = [];
+  for (let m = 0; m <= maxMo; m += xStep) xTicks.push(m);
+  if (xTicks[xTicks.length - 1] !== maxMo) xTicks.push(maxMo);
+
+  const gridLines = yTicks.map(v =>
+    `<line x1="${PAD.left}" y1="${sy(v).toFixed(1)}" x2="${W - PAD.right}" y2="${sy(v).toFixed(1)}" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3,3"/>`
+  ).join('');
+
+  const yLabels = yTicks.map(v =>
+    `<text x="${PAD.left - 6}" y="${sy(v).toFixed(1)}" text-anchor="end" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="11" fill="#9CA3AF">${fmtY(v)}</text>`
+  ).join('');
+
+  const xLabels = xTicks.map(m =>
+    `<text x="${sx(m).toFixed(1)}" y="${(PAD.top + cH + 16).toFixed(1)}" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#9CA3AF">${m}mo</text>`
+  ).join('');
+
+  // Endpoint dots (start + end of line)
+  const first = points[0];
+  const last  = points[points.length - 1];
+  const dots  = [
+    `<circle cx="${sx(first.month).toFixed(1)}" cy="${sy(first.balance).toFixed(1)}" r="4" fill="${colour}" stroke="white" stroke-width="2"/>`,
+    `<circle cx="${sx(last.month).toFixed(1)}"  cy="${sy(last.balance).toFixed(1)}"  r="5" fill="${colour}" stroke="white" stroke-width="2"/>`,
+  ].join('');
+
+  return `<defs>
+    <linearGradient id="projGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="${colour}" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="${colour}" stop-opacity="0.01"/>
+    </linearGradient>
+  </defs>
+  ${gridLines}
+  <path d="${fillPath}" fill="url(#projGrad)"/>
+  <path d="${linePath}" fill="none" stroke="${colour}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  ${dots}
+  ${yLabels}
+  ${xLabels}`;
+}
 
 /* ============================================================
    COPY LINK

@@ -310,6 +310,28 @@
         <div class="whatif-grid" id="whatif-grid"></div>
       </div>
 
+      <!-- Savings Projection Graph -->
+      <div class="card projection-card" id="projection-section" style="display:none">
+        <h3 class="projection-title">&#128200; Your Savings Projection</h3>
+
+        <!-- SVG chart (aria-hidden — meaning conveyed by summary below) -->
+        <div class="projection-chart-wrap">
+          <svg
+            id="projection-svg"
+            viewBox="0 0 540 220"
+            width="100%"
+            aria-hidden="true"
+            focusable="false"
+          ></svg>
+        </div>
+
+        <!-- Accessible plain-English summary -->
+        <p id="projection-summary" class="projection-summary"></p>
+
+        <!-- Milestone cards -->
+        <div class="milestone-grid" id="projection-milestones" aria-label="Projected savings at key milestones"></div>
+      </div>
+
     </div>
   </section>
 
