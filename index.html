@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How Long Will Your Savings Last? | Free Savings Runway Calculator</title>
-  <meta name="description" content="Find out how long your savings will last, when you'll run out of money, and get a roast about your spending habits. Free savings runway calculator.">
+  <meta name="description" content="Find out exactly how long your savings will last. Enter your spending and income, get your runway, a spending nickname, a roast, and three tips to fix it. Free — no signup, no bank login.">
   <meta property="og:title" content="How Long Will Your Savings Last?">
   <meta property="og:description" content="Enter your numbers. Get your runway. Plus a roast you didn't ask for.">
   <meta property="og:type" content="website">
@@ -30,11 +30,31 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="top">
     <div class="container">
-      <div class="badge">Free &middot; No signup &middot; Instant results</div>
+      <div class="badge">Free &middot; No signup &middot; Instant results &middot; No bank login</div>
       <h1>How Long Will Your<br><span class="accent">Savings Last?</span></h1>
-      <p class="subhead">Enter your numbers. Get your runway.<br>Plus a roast you didn't ask for.</p>
-      <a href="#calculator" class="btn btn-primary">Calculate My Runway &rarr;</a>
-      <p class="social-proof">Takes 30 seconds &middot; No signup &middot; <strong>No judgment</strong> (okay, a little)</p>
+      <p class="subhead">Enter your savings and spending. Get your exact runway, a brutally honest roast, and three tips to fix it &mdash; in 30 seconds.</p>
+      <a href="#calculator" class="btn btn-primary">Calculate My Financial Fate &rarr;</a>
+      <p class="social-proof">Your numbers stay in your browser &middot; <strong>No judgment</strong> (okay, a little)</p>
+
+      <!-- Sample result preview — shows visitors what they'll get -->
+      <div class="hero-preview" aria-hidden="true">
+        <p class="preview-eyebrow">&#10022; Example result</p>
+        <div class="preview-card">
+          <p class="preview-nickname">&ldquo;The Pre-Broke Professional&rdquo;</p>
+          <div class="preview-stats">
+            <div class="preview-stat">
+              <span class="preview-value">4</span>
+              <span class="preview-stat-label">months left</span>
+            </div>
+            <div class="preview-divider"></div>
+            <div class="preview-stat">
+              <span class="preview-value preview-value--date">Sept 2026</span>
+              <span class="preview-stat-label">broke by</span>
+            </div>
+          </div>
+          <p class="preview-roast">&ldquo;That&rsquo;s not a runway &mdash; it&rsquo;s a driveway. A short one. With a speed bump at the end.&rdquo;</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -58,8 +78,10 @@
                 placeholder="10,000"
                 autocomplete="off"
                 aria-required="true"
+                aria-describedby="savings-hint"
               >
             </div>
+            <p class="field-hint" id="savings-hint">Enter 0 if you have no savings yet &mdash; it still works.</p>
           </div>
 
           <div class="field-group">
@@ -92,8 +114,10 @@
                 inputmode="decimal"
                 placeholder="0"
                 autocomplete="off"
+                aria-describedby="income-hint"
               >
             </div>
+            <p class="field-hint" id="income-hint">We subtract income from spending to estimate your monthly burn.</p>
           </div>
 
           <div class="field-group">
@@ -107,7 +131,7 @@
 
           <div id="error-msg" class="error-msg" role="alert" aria-live="polite"></div>
 
-          <button type="submit" class="btn btn-primary btn-full">Show Me the Truth &rarr;</button>
+          <button type="submit" class="btn btn-primary btn-full">Calculate My Financial Fate &rarr;</button>
 
         </form>
       </div>

@@ -672,6 +672,117 @@ body {
 .footer-link:hover { color: var(--text-dark-muted); }
 
 /* ============================================================
+   HERO PREVIEW CARD
+   ============================================================ */
+.hero-preview {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.preview-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+.preview-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 22px 24px;
+  max-width: 340px;
+  margin: 0 auto;
+  border-left: 4px solid var(--accent-spicy);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    0 24px 56px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.preview-nickname {
+  font-size: 17px;
+  font-weight: 900;
+  color: #C2410C;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+
+.preview-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 14px;
+  background: #F5F3FF;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.preview-stat {
+  flex: 1;
+  text-align: center;
+  padding: 12px 8px;
+}
+
+.preview-divider {
+  width: 1px;
+  height: 40px;
+  background: #E2E8F0;
+  flex-shrink: 0;
+}
+
+.preview-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 900;
+  color: #0F0E17;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.preview-value--date {
+  font-size: 18px;
+}
+
+.preview-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6B7280;
+}
+
+.preview-roast {
+  font-size: 13px;
+  font-style: italic;
+  color: #6B7280;
+  line-height: 1.6;
+  padding: 10px 12px;
+  background: #FFF7ED;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-spicy);
+  margin: 0;
+}
+
+/* ============================================================
+   FIELD HINTS AND PER-FIELD ERROR STATES
+   ============================================================ */
+.field-hint {
+  font-size: 12px;
+  color: var(--text-dark-muted);
+  margin-top: 7px;
+  line-height: 1.5;
+  padding-left: 2px;
+}
+
+.input-wrapper.has-error input {
+  border-color: var(--accent-savage) !important;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+  background: #FFF5F5;
+}
+
+/* ============================================================
    SITE NAV  (shared across all pages)
    ============================================================ */
 .site-nav {

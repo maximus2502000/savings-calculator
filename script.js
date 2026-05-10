@@ -186,7 +186,13 @@ function initRoastToggle() {
 function initInputFormatting() {
   ['savings', 'spending', 'income'].forEach(id => {
     const input = document.getElementById(id);
-    input.addEventListener('input', () => formatCurrencyInput(input));
+    input.addEventListener('input', () => {
+      formatCurrencyInput(input);
+      // Clear field error as user corrects their input
+      input.closest('.input-wrapper').classList.remove('has-error');
+      const errorEl = document.getElementById('error-msg');
+      if (errorEl.classList.contains('visible')) errorEl.classList.remove('visible');
+    });
     input.addEventListener('focus', () => {
       if (!hasStarted) {
         hasStarted = true;
@@ -254,19 +260,52 @@ function initForm() {
 }
 
 function handleSubmit() {
-  const savings  = parseAmount('savings');
-  const spending = parseAmount('spending');
-  const income   = parseAmount('income');
-  const errorEl  = document.getElementById('error-msg');
+  const savingsEl  = document.getElementById('savings');
+  const spendingEl = document.getElementById('spending');
+  const incomeEl   = document.getElementById('income');
+  const errorEl    = document.getElementById('error-msg');
 
-  if (!savings || !spending) {
-    errorEl.textContent = 'Please enter your current savings and monthly spending to continue.';
-    errorEl.classList.add('visible');
-    Analytics.track('form_error', { reason: 'missing_fields' });
-    return;
+  // Clear all previous error states
+  errorEl.classList.remove('visible');
+  [savingsEl, spendingEl, incomeEl].forEach(el =>
+    el.closest('.input-wrapper').classList.remove('has-error')
+  );
+
+  const savingsRaw  = savingsEl.value.replace(/,/g, '').trim();
+  const spendingRaw = spendingEl.value.replace(/,/g, '').trim();
+  const incomeRaw   = incomeEl.value.replace(/,/g, '').trim();
+
+  const savings  = parseFloat(savingsRaw)  || 0;
+  const spending = parseFloat(spendingRaw) || 0;
+  const income   = parseFloat(incomeRaw)   || 0;
+
+  let errorMsg   = '';
+  let errorField = null;
+
+  if (savingsRaw === '') {
+    errorMsg   = 'Enter your current savings — use 0 if you have nothing saved yet.';
+    errorField = savingsEl;
+  } else if (savings < 0) {
+    errorMsg   = 'Savings can\'t be negative. Enter 0 or more.';
+    errorField = savingsEl;
+  } else if (spendingRaw === '' || spending <= 0) {
+    errorMsg   = 'Monthly spending must be greater than zero — that\'s what determines your burn rate.';
+    errorField = spendingEl;
+  } else if (income < 0) {
+    errorMsg   = 'Monthly income can\'t be negative. Leave it blank or enter 0 if you have no income right now.';
+    errorField = incomeEl;
   }
 
-  errorEl.classList.remove('visible');
+  if (errorMsg) {
+    errorEl.textContent = errorMsg;
+    errorEl.classList.add('visible');
+    if (errorField) {
+      errorField.closest('.input-wrapper').classList.add('has-error');
+      errorField.focus();
+    }
+    Analytics.track('form_error', { reason: 'validation_failed' });
+    return;
+  }
 
   Analytics.track('calculator_submitted', {
     roast_level: currentLevel,
