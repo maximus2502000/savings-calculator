@@ -150,6 +150,10 @@
           <p class="result-headline" id="result-headline">Your savings will last about</p>
           <p class="result-duration" id="result-duration"></p>
           <span class="result-status-badge" id="result-status-badge"></span>
+          <div class="result-badge-wrap" id="result-badge-wrap">
+            <span class="result-badge-emoji" id="result-badge-emoji"></span>
+            <span class="result-badge-label" id="result-badge-label"></span>
+          </div>
         </div>
 
         <!-- Stats -->
@@ -183,7 +187,16 @@
         <button class="btn btn-secondary" id="copy-btn" onclick="copyResult()">&#128203; Copy My Result</button>
         <button class="btn btn-secondary" id="copy-roast-btn" onclick="copyRoast()">&#9988;&#65039; Copy the Roast</button>
         <button class="btn btn-secondary" id="tweet-btn" onclick="tweetResult()">&#128038; Tweet My Shame</button>
+        <button class="btn btn-secondary" onclick="copyLink()">&#128279; Copy Link</button>
+        <button class="btn btn-secondary" onclick="downloadShareCard()">&#11015;&#65039; Download Card</button>
         <button class="btn btn-outline" onclick="resetForm()">&#8617; Try Again</button>
+      </div>
+
+      <!-- What-If section -->
+      <div class="card whatif-card" id="whatif-section" style="display:none">
+        <h3 class="whatif-title">What If I Changed Things?</h3>
+        <p class="whatif-sub">See how small adjustments extend your runway.</p>
+        <div class="whatif-grid" id="whatif-grid"></div>
       </div>
 
     </div>

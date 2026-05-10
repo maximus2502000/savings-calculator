@@ -169,6 +169,20 @@ const TIPS = {
 };
 
 /* ============================================================
+   DATA — BADGES / RANK SYSTEM
+   ============================================================ */
+
+const BADGES = {
+  stable:   { emoji: '💰', label: 'Cash Flow Champion'        },
+  zero:     { emoji: '🛡️', label: 'Wallet Witness Protection' },
+  critical: { emoji: '👻', label: 'Financial Jump Scare'       },
+  urgent:   { emoji: '👺', label: 'Budget Goblin'              },
+  tight:    { emoji: '🌱', label: 'Breathing Room Beginner'    },
+  moderate: { emoji: '🏆', label: 'Savings Survivor'           },
+  strong:   { emoji: '👑', label: 'Runway Royalty'             },
+};
+
+/* ============================================================
    DATA — LOADING LINES
    ============================================================ */
 
@@ -580,8 +594,15 @@ function renderResult(result, content) {
   }
 
   if (statusEl) statusEl.textContent = STATUS_LABELS[tierId] || '';
-  if (nickEl)   nickEl.textContent   = `“${content.nickname}”`;
+  if (nickEl)   nickEl.textContent   = `”${content.nickname}”`;
   if (statGrid) statGrid.innerHTML   = buildStatGrid(result);
+
+  // Badge / rank
+  const badge        = BADGES[tierId];
+  const badgeEmojiEl = document.getElementById('result-badge-emoji');
+  const badgeLabelEl = document.getElementById('result-badge-label');
+  if (badgeEmojiEl && badge) badgeEmojiEl.textContent = badge.emoji;
+  if (badgeLabelEl && badge) badgeLabelEl.textContent = badge.label;
 
   // Roast
   if (roastEl) {
@@ -608,6 +629,9 @@ function renderResult(result, content) {
   // Hide the calc-prompt
   const prompt = document.getElementById('calc-prompt');
   if (prompt) prompt.style.display = 'none';
+
+  // Render What-If section
+  renderWhatIf(result);
 
   // Animate in
   section.classList.remove('visible');
@@ -710,13 +734,20 @@ function buildShortCopyText() {
   const { result } = lastResult;
   const duration   = document.getElementById('result-duration')?.textContent || '';
   const roastEl    = document.getElementById('result-roast');
-  const roast      = roastEl?.textContent || '';
+  const roast      = roastEl && roastEl.closest('#roast-block')?.style.display !== 'none'
+    ? (roastEl.textContent || '') : '';
+  const tierId     = getTierId(result.months, result.stable);
+  const badge      = BADGES[tierId];
 
-  const intro = result.stable
-    ? 'just found out my income covers my spending 🧪'
-    : `just found out my savings last ${duration} 💩`;
+  const runwayLine = result.stable
+    ? `My income covers my spending — I'm a ${badge?.label || 'Cash Flow Champion'} ${badge?.emoji || '💰'}`
+    : `My savings will last about ${duration}`;
 
-  return `${intro}\n\n"${roast}"\n\nsavingsroast.com`;
+  const roastLine = roast
+    ? `\n\nSavings Roast says: "${roast.length > 120 ? roast.slice(0, 117) + '…' : roast}"`
+    : '';
+
+  return `${runwayLine}.${roastLine}\n\nTry yours at savingsroast.com`;
 }
 
 function copyResult() {
@@ -780,9 +811,11 @@ function resetForm() {
   document.getElementById('error-msg')?.classList.remove('visible');
   lastResult = null;
 
-  // Restore calc-prompt
-  const prompt = document.getElementById('calc-prompt');
+  // Restore calc-prompt, hide what-if
+  const prompt  = document.getElementById('calc-prompt');
   if (prompt) prompt.style.display = '';
+  const whatif  = document.getElementById('whatif-section');
+  if (whatif) whatif.style.display = 'none';
 
   document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -904,6 +937,196 @@ const Analytics = {
     }
   },
 };
+
+/* ============================================================
+   COPY LINK
+   ============================================================ */
+
+function copyLink() {
+  writeToClipboard('https://savingsroast.com', () => {
+    showToast('Link copied! Share savingsroast.com with a friend.');
+    Analytics.track('copy_link_clicked');
+  });
+}
+
+/* ============================================================
+   WHAT-IF SIMULATOR
+   ============================================================ */
+
+function renderWhatIf(result) {
+  const section = document.getElementById('whatif-section');
+  const grid    = document.getElementById('whatif-grid');
+  if (!section || !grid) return;
+
+  const scenarios = [
+    { label: '✂️ Cut $100/mo',  newSpend: result.spending - 100, newIncome: result.income       },
+    { label: '✂️ Cut $250/mo',  newSpend: result.spending - 250, newIncome: result.income       },
+    { label: '✂️ Cut $500/mo',  newSpend: result.spending - 500, newIncome: result.income       },
+    { label: '💼 +$100 income', newSpend: result.spending,       newIncome: result.income + 100 },
+    { label: '💼 +$250 income', newSpend: result.spending,       newIncome: result.income + 250 },
+    { label: '💼 +$500 income', newSpend: result.spending,       newIncome: result.income + 500 },
+  ];
+
+  grid.innerHTML = scenarios.map(s => {
+    const effSpend = Math.max(0, s.newSpend);
+    const newBurn  = effSpend - s.newIncome;
+    let impact     = '';
+    let positive   = false;
+
+    if (result.stable) {
+      // Already stable — show extra monthly savings
+      const adj    = Math.abs(s.newSpend < result.spending
+        ? result.spending - s.newSpend
+        : s.newIncome - result.income);
+      impact   = `+$${adj.toLocaleString()}/mo more saved`;
+      positive = true;
+
+    } else if (newBurn <= 0) {
+      impact   = 'Income covers spending! 🎉';
+      positive = true;
+
+    } else {
+      const newMonths = result.savings / newBurn;
+      const extra     = newMonths - result.months;
+      if (extra < 0.1) {
+        impact   = 'Less than a week extra';
+        positive = false;
+      } else {
+        impact   = `+${formatDuration(extra)} extra`;
+        positive = true;
+      }
+    }
+
+    return `
+      <div class="whatif-item${positive ? ' whatif-item--positive' : ''}">
+        <span class="whatif-label">${escapeHTML(s.label)}</span>
+        <span class="whatif-impact">${escapeHTML(impact)}</span>
+      </div>`;
+  }).join('');
+
+  section.style.display = '';
+}
+
+/* ============================================================
+   DOWNLOAD SHARE CARD  (HTML Canvas — no dependencies)
+   ============================================================ */
+
+function downloadShareCard() {
+  if (!lastResult) { showToast('Calculate your runway first!'); return; }
+
+  const { result } = lastResult;
+  const tierId     = getTierId(result.months, result.stable);
+  const badge      = BADGES[tierId];
+  const duration   = result.stable ? 'Indefinitely' : formatDuration(result.months);
+  const roastEl    = document.getElementById('result-roast');
+  const rawRoast   = roastEl && roastEl.closest('#roast-block')?.style.display !== 'none'
+    ? (roastEl.textContent || '').trim() : '';
+  const roast      = rawRoast.length > 110 ? rawRoast.slice(0, 107) + '…' : rawRoast;
+
+  const SIZE   = 800;
+  const canvas = document.createElement('canvas');
+  canvas.width  = SIZE;
+  canvas.height = SIZE;
+  const ctx = canvas.getContext('2d');
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, SIZE, SIZE);
+  grad.addColorStop(0, '#2D1B69');
+  grad.addColorStop(1, '#4C1D95');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, SIZE, SIZE);
+
+  // Glow orb (top-right)
+  const glow = ctx.createRadialGradient(650, 100, 0, 650, 100, 320);
+  glow.addColorStop(0, 'rgba(139, 92, 246, 0.28)');
+  glow.addColorStop(1, 'rgba(139, 92, 246, 0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(650, 100, 320, 0, Math.PI * 2); ctx.fill();
+
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Brand label
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.font      = 'bold 18px Arial, sans-serif';
+  ctx.fillText('SAVINGS ROAST', SIZE / 2, 56);
+
+  // Badge emoji
+  ctx.font = '68px Arial, sans-serif';
+  ctx.fillText(badge.emoji, SIZE / 2, 150);
+
+  // Badge label
+  ctx.fillStyle = '#FCD34D';
+  ctx.font      = 'bold 26px Arial, sans-serif';
+  ctx.fillText(badge.label.toUpperCase(), SIZE / 2, 214);
+
+  // Duration (big number — shrink if too wide)
+  ctx.fillStyle = '#FFFFFF';
+  let fontSize  = 92;
+  ctx.font      = `900 ${fontSize}px Arial, sans-serif`;
+  const maxW    = SIZE - 80;
+  while (ctx.measureText(duration).width > maxW && fontSize > 36) {
+    fontSize -= 4;
+    ctx.font = `900 ${fontSize}px Arial, sans-serif`;
+  }
+  ctx.fillText(duration, SIZE / 2, 330);
+
+  // Sub-label under duration
+  ctx.fillStyle = 'rgba(255,255,255,0.48)';
+  ctx.font      = '600 20px Arial, sans-serif';
+  const subLabel = result.stable ? 'Your income covers your spending' : 'of savings runway';
+  ctx.fillText(subLabel, SIZE / 2, 388);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth   = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, 424); ctx.lineTo(720, 424);
+  ctx.stroke();
+
+  // Roast quote (wrapped text)
+  if (roast) {
+    ctx.fillStyle = 'rgba(255,255,255,0.78)';
+    ctx.font      = 'italic 22px Arial, sans-serif';
+    wrapCanvasText(ctx, `"${roast}"`, SIZE / 2, 478, maxW - 40, 32);
+  }
+
+  // URL
+  ctx.fillStyle = 'rgba(255,255,255,0.32)';
+  ctx.font      = 'bold 20px Arial, sans-serif';
+  ctx.fillText('savingsroast.com', SIZE / 2, 752);
+
+  // Download the image
+  canvas.toBlob(blob => {
+    if (!blob) return;
+    const url  = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'savings-roast-card.png';
+    link.href     = url;
+    link.click();
+    URL.revokeObjectURL(url);
+  }, 'image/png');
+
+  showToast('Card downloaded! Share it anywhere. 🎉');
+  Analytics.track('share_card_downloaded', { tier: tierId });
+}
+
+function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words     = text.split(' ');
+  let   line      = '';
+  let   currentY  = y;
+  for (const word of words) {
+    const test = line ? line + ' ' + word : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      ctx.fillText(line, x, currentY);
+      line      = word;
+      currentY += lineHeight;
+    } else {
+      line = test;
+    }
+  }
+  if (line) ctx.fillText(line, x, currentY);
+}
 
 /* ============================================================
    UTILS
