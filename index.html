@@ -248,52 +248,70 @@
 
   <!-- ===================== RESULTS ===================== -->
   <section class="results-section" id="results" aria-live="polite" aria-atomic="false" aria-label="Your savings runway result">
-    <div class="container">
 
-      <div class="card result-card" id="result-card">
+    <!-- Dual panel: result card (left) + projection graph (right) -->
+    <div class="results-dual-outer">
+      <div class="results-dual-grid">
 
-        <!-- Headline -->
-        <div class="result-headline-section">
-          <span class="result-label">&#10022; YOUR SAVINGS RUNWAY</span>
-          <p class="result-headline" id="result-headline">Your savings will last about</p>
-          <p class="result-duration" id="result-duration"></p>
-          <span class="result-status-badge" id="result-status-badge"></span>
-          <div class="result-badge-wrap" id="result-badge-wrap">
-            <span class="result-badge-emoji" id="result-badge-emoji" aria-hidden="true"></span>
-            <div class="result-badge-text">
-              <span class="result-badge-rank-label">Your Rank</span>
-              <span class="result-badge-label" id="result-badge-label"></span>
+        <!-- LEFT: Result card -->
+        <div class="card result-card" id="result-card">
+
+          <div class="result-headline-section">
+            <span class="result-label">&#10022; YOUR SAVINGS RUNWAY</span>
+            <p class="result-headline" id="result-headline">Your savings will last about</p>
+            <p class="result-duration" id="result-duration"></p>
+            <span class="result-status-badge" id="result-status-badge"></span>
+            <div class="result-badge-wrap" id="result-badge-wrap">
+              <span class="result-badge-emoji" id="result-badge-emoji" aria-hidden="true"></span>
+              <div class="result-badge-text">
+                <span class="result-badge-rank-label">Your Rank</span>
+                <span class="result-badge-label" id="result-badge-label"></span>
+              </div>
             </div>
           </div>
+
+          <div class="stat-grid" id="stat-grid" aria-label="Key statistics"></div>
+
+          <div class="divider"></div>
+
+          <p class="nickname" id="result-nickname"></p>
+
+          <div id="roast-block">
+            <span class="section-label">&#128293; Your Roast</span>
+            <p class="roast-text" id="result-roast"></p>
+          </div>
+
+          <div id="coach-block">
+            <span class="section-label">&#128161; 3 Ways to Stretch Further</span>
+            <p class="coach-intro" id="coach-intro"></p>
+            <ol class="tips-list" id="result-tips"></ol>
+          </div>
+
+          <p class="result-disclaimer">This tool is for education and entertainment only. It is not financial advice.</p>
+          <p class="watermark">savingsroast.com</p>
         </div>
 
-        <!-- Stats -->
-        <div class="stat-grid" id="stat-grid" aria-label="Key statistics"></div>
-
-        <div class="divider"></div>
-
-        <!-- Identity nickname -->
-        <p class="nickname" id="result-nickname"></p>
-
-        <!-- Roast block (shown for roast / both modes) -->
-        <div id="roast-block">
-          <span class="section-label">&#128293; Your Roast</span>
-          <p class="roast-text" id="result-roast"></p>
+        <!-- RIGHT: Savings Projection Graph -->
+        <div class="card projection-card" id="projection-section" style="display:none">
+          <h3 class="projection-title">&#128200; Your Savings Projection</h3>
+          <div class="projection-chart-wrap">
+            <svg
+              id="projection-svg"
+              viewBox="0 0 540 220"
+              width="100%"
+              aria-hidden="true"
+              focusable="false"
+            ></svg>
+          </div>
+          <p id="projection-summary" class="projection-summary"></p>
+          <div class="milestone-grid" id="projection-milestones" aria-label="Projected savings at key milestones"></div>
         </div>
 
-        <!-- Coach block (shown for coach / both modes) -->
-        <div id="coach-block">
-          <span class="section-label">&#128161; 3 Ways to Stretch Further</span>
-          <p class="coach-intro" id="coach-intro"></p>
-          <ol class="tips-list" id="result-tips"></ol>
-        </div>
-
-        <!-- Disclaimer -->
-        <p class="result-disclaimer">This tool is for education and entertainment only. It is not financial advice.</p>
-
-        <p class="watermark">savingsroast.com</p>
       </div>
+    </div>
 
+    <!-- Below the dual panel: share buttons + What-If -->
+    <div class="container">
       <div class="share-row" role="group" aria-label="Share your result">
         <button class="btn btn-secondary" id="copy-btn" onclick="copyResult()">&#128203; Copy My Result</button>
         <button class="btn btn-secondary" id="copy-roast-btn" onclick="copyRoast()">&#9988;&#65039; Copy the Roast</button>
@@ -303,36 +321,13 @@
         <button class="btn btn-outline" onclick="resetForm()">&#8617; Try Again</button>
       </div>
 
-      <!-- What-If simulator -->
       <div class="card whatif-card" id="whatif-section" style="display:none" aria-label="Savings runway simulator">
         <h3 class="whatif-title">What If I Changed Things?</h3>
         <p class="whatif-sub">See how small adjustments extend your runway.</p>
         <div class="whatif-grid" id="whatif-grid"></div>
       </div>
-
-      <!-- Savings Projection Graph -->
-      <div class="card projection-card" id="projection-section" style="display:none">
-        <h3 class="projection-title">&#128200; Your Savings Projection</h3>
-
-        <!-- SVG chart (aria-hidden — meaning conveyed by summary below) -->
-        <div class="projection-chart-wrap">
-          <svg
-            id="projection-svg"
-            viewBox="0 0 540 220"
-            width="100%"
-            aria-hidden="true"
-            focusable="false"
-          ></svg>
-        </div>
-
-        <!-- Accessible plain-English summary -->
-        <p id="projection-summary" class="projection-summary"></p>
-
-        <!-- Milestone cards -->
-        <div class="milestone-grid" id="projection-milestones" aria-label="Projected savings at key milestones"></div>
-      </div>
-
     </div>
+
   </section>
 
   <!-- ===================== CALC PROMPT ===================== -->
