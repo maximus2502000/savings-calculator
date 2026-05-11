@@ -1117,6 +1117,164 @@ body {
 .whatif-item--positive .whatif-impact { color: #15803D; }
 
 /* ============================================================
+   TIP CARDS WITH VIDEO  (result card coach block)
+   ============================================================ */
+
+/* Override default li flex layout for structured tip cards */
+.tips-list li.tip-card {
+  display: block;
+  gap: 0;
+  font-size: inherit;
+  padding: 0;
+  counter-increment: tips;
+}
+
+.tips-list li.tip-card::before {
+  display: none; /* tip-number span replaces the CSS counter badge */
+}
+
+.tip-card {
+  background: #FAFBFF;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1.5px solid #E8E4FF;
+}
+
+.tip-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.tip-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  background: #EDE9FE;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-top: 1px;
+}
+
+.tip-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.tip-description {
+  font-size: 14px;
+  color: var(--text-dark-muted);
+  line-height: 1.6;
+  margin: 0 0 0 38px; /* align under title (26px badge + 12px gap) */
+}
+
+.tip-video-area {
+  margin: 12px 0 0 38px;
+  padding: 12px 14px;
+  background: #F5F3FF;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+}
+
+.tip-video-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.tip-video-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.tip-video-note {
+  font-size: 12px;
+  color: var(--text-dark-muted);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.tip-watch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--accent);
+  color: #FFFFFF;
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tip-watch-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.tip-watch-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Responsive 16:9 iframe embed */
+.tip-embed-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  margin-top: 10px;
+}
+
+.tip-embed-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+/* Third-party video disclaimer */
+.tip-video-disclaimer {
+  font-size: 11px;
+  color: var(--text-dark-muted);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #F3F0FF;
+  font-style: italic;
+}
+
+/* On very small screens, remove left indent */
+@media (max-width: 400px) {
+  .tip-description,
+  .tip-video-area { margin-left: 0; }
+}
+
+/* ============================================================
    CALC PROMPT  (shows before calculation)
    ============================================================ */
 .calc-prompt {

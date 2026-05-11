@@ -2,8 +2,10 @@
    CONFIG
    ============================================================ */
 
-const ENABLE_CLAUDE_API = false;
-const API_URL           = 'http://localhost:3001/api/roast';
+const ENABLE_CLAUDE_API      = false;
+const API_URL                = 'http://localhost:3001/api/roast';
+// Set to true to embed YouTube videos inline; false shows a "Watch" link instead
+const USE_EMBEDDED_TIP_VIDEOS = false;
 
 /* ============================================================
    DATA — TIERS
@@ -174,60 +176,312 @@ const COACH_MESSAGES = {
 
 const TIPS = {
   stable: [
-    "Move excess savings into a high-yield account — cash in a basic checking account loses value to inflation every month.",
-    "Max your employer's pension or 401k match if available — it's literally free money.",
-    "Consider speaking to a financial advisor about where to deploy the surplus more productively.",
-    "Automate a fixed percentage of income into investments — removing willpower from the equation makes it stick.",
-    "Review your insurance policies annually — most people are over-insured in some areas and under-insured in others.",
-    "If you don't have a will or basic estate documents, stable times are the right moment to sort it — not during a crisis.",
+    {
+      title: 'Open a high-yield savings account',
+      description: 'Move excess savings into a high-yield account — cash in a basic checking account loses value to inflation every month.',
+      videoTitle: 'High-Yield Savings Accounts Explained',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "high yield savings account explained" on YouTube
+      videoNote: 'A quick guide to finding accounts currently paying 4–5% APY.',
+    },
+    {
+      title: 'Max your employer\'s 401k match',
+      description: 'Max your employer\'s pension or 401k match if available — it\'s literally free money.',
+      videoTitle: 'How to Maximize Your 401k Employer Match',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to maximize 401k employer match" on YouTube
+      videoNote: 'Why the employer match is the highest guaranteed return available.',
+    },
+    {
+      title: 'Speak to a fee-only financial advisor',
+      description: 'Consider speaking to a financial advisor about where to deploy the surplus more productively.',
+      videoTitle: 'How to Find a Fee-Only Financial Advisor',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "fee only financial advisor how to find" on YouTube
+      videoNote: 'What to look for and the difference between fee-only and commission advisors.',
+    },
+    {
+      title: 'Automate your investing',
+      description: 'Automate a fixed percentage of income into investments — removing willpower from the equation makes it stick.',
+      videoTitle: 'How to Automate Your Investing (Set and Forget)',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "automate investing set and forget" on YouTube
+      videoNote: 'Step-by-step setup for automatic monthly investments.',
+    },
+    {
+      title: 'Review your insurance annually',
+      description: 'Review your insurance policies annually — most people are over-insured in some areas and under-insured in others.',
+      videoTitle: 'How to Save Money on Insurance',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to save money on insurance policies" on YouTube
+      videoNote: 'How to audit your coverage and negotiate better rates.',
+    },
+    {
+      title: 'Get your estate basics sorted',
+      description: 'If you don\'t have a will or basic estate documents, stable times are the right moment to sort it — not during a crisis.',
+      videoTitle: 'Basic Estate Planning Documents You Need',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "basic estate planning documents will power of attorney" on YouTube
+      videoNote: 'The minimum documents everyone with assets should have.',
+    },
   ],
   zero: [
-    "Call your bank today and pause every non-essential recurring charge — subscriptions, memberships, anything you don't use weekly.",
-    "List every subscription you pay for and cancel anything you haven't opened in the last 30 days.",
-    "Any income source helps right now: freelance work, gig work, or selling unused items online can buy you meaningful extra time.",
-    "Make a list of everything you own that has resale value — electronics, furniture, gear — and consider what you can part with.",
-    "Look into community resources: food banks, local assistance programs, and hardship grants exist for exactly this situation.",
-    "Turn any skill you have into even one paid hour this week — cooking, writing, fixing things, teaching — start small.",
+    {
+      title: 'Pause non-essential recurring charges',
+      description: 'Call your bank today and pause every non-essential recurring charge — subscriptions, memberships, anything you don\'t use weekly.',
+      videoTitle: 'How to Audit Your Bank Statement for Recurring Charges',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to audit bank statement subscriptions" on YouTube
+      videoNote: 'A simple method to find and cancel charges in under 30 minutes.',
+    },
+    {
+      title: 'Cancel forgotten subscriptions',
+      description: 'List every subscription you pay for and cancel anything you haven\'t opened in the last 30 days.',
+      videoTitle: 'Find and Cancel All Your Subscriptions Fast',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "find and cancel unused subscriptions" on YouTube
+      videoNote: 'Tools and methods to track down every recurring payment.',
+    },
+    {
+      title: 'Activate any income source you can',
+      description: 'Any income source helps right now: freelance work, gig work, or selling unused items online can buy you meaningful extra time.',
+      videoTitle: 'How to Make Money Fast With No Experience',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to make money fast no experience gig work" on YouTube
+      videoNote: 'Practical options for generating income within the first 48 hours.',
+    },
+    {
+      title: 'Sell what you own but don\'t use',
+      description: 'Make a list of everything you own that has resale value — electronics, furniture, gear — and consider what you can part with.',
+      videoTitle: 'How to Sell Stuff Online and Get Paid Fast',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to sell stuff online marketplace tips" on YouTube
+      videoNote: 'Best platforms and pricing tips to sell quickly.',
+    },
+    {
+      title: 'Explore community assistance programs',
+      description: 'Look into community resources: food banks, local assistance programs, and hardship grants exist for exactly this situation.',
+      videoTitle: 'Financial Assistance Programs You May Not Know About',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "financial assistance programs help near me" on YouTube
+      videoNote: 'Many programs exist specifically for short-term financial emergencies.',
+    },
+    {
+      title: 'Turn a skill into one paid hour',
+      description: 'Turn any skill you have into even one paid hour this week — cooking, writing, fixing things, teaching — start small.',
+      videoTitle: 'How to Turn Your Skills Into Income This Week',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "turn skills into income side hustle beginner" on YouTube
+      videoNote: 'Real starting points for converting everyday skills into paid work.',
+    },
   ],
   critical: [
-    "Pause every non-essential direct debit and subscription — even small recurring charges add up fast.",
-    "Look into gig or freelance income immediately: even $200 extra per month changes your runway meaningfully.",
-    "Contact any service providers about hardship options — many will defer or reduce payments if you ask before you miss one.",
-    "Review your last 30 days of spending and cut everything that isn't shelter, food, or essential transport.",
-    "Same-day gig platforms can generate cash within 24 hours of signing up — delivery, tasks, and local services are worth exploring.",
-    "Negotiate your rent, utilities, or any large recurring bill — one successful call can buy you meaningful extra time.",
+    {
+      title: 'Pause all non-essential direct debits',
+      description: 'Pause every non-essential direct debit and subscription — even small recurring charges add up fast.',
+      videoTitle: 'How to Quickly Cut Your Monthly Bills',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to cut monthly bills fast" on YouTube
+      videoNote: 'Fast method to identify and cancel recurring costs before next billing date.',
+    },
+    {
+      title: 'Start gig or freelance income immediately',
+      description: 'Look into gig or freelance income immediately: even $200 extra per month changes your runway meaningfully.',
+      videoTitle: 'Best Side Hustles for Fast Cash',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "best side hustles fast cash 2024" on YouTube
+      videoNote: 'Options that can generate income within days, not weeks.',
+    },
+    {
+      title: 'Ask providers about hardship options',
+      description: 'Contact any service providers about hardship options — many will defer or reduce payments if you ask before you miss one.',
+      videoTitle: 'How to Negotiate Bills and Ask for Hardship Plans',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to ask for bill hardship plan deferral" on YouTube
+      videoNote: 'Scripts and tips for calling providers and getting payments paused.',
+    },
+    {
+      title: 'Audit your last 30 days of spending',
+      description: 'Review your last 30 days of spending and cut everything that isn\'t shelter, food, or essential transport.',
+      videoTitle: 'How to Do a Full Spending Audit',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to do a spending audit budget" on YouTube
+      videoNote: 'Step-by-step process to review and cut non-essentials fast.',
+    },
+    {
+      title: 'Try same-day gig platforms',
+      description: 'Same-day gig platforms can generate cash within 24 hours of signing up — delivery, tasks, and local services are worth exploring.',
+      videoTitle: 'Gig Apps That Pay You Same Day',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "gig apps same day pay delivery tasks" on YouTube
+      videoNote: 'Comparison of platforms with fast payout options.',
+    },
+    {
+      title: 'Negotiate your biggest recurring bills',
+      description: 'Negotiate your rent, utilities, or any large recurring bill — one successful call can buy you meaningful extra time.',
+      videoTitle: 'How to Negotiate Any Bill Over the Phone',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to negotiate bills over phone script" on YouTube
+      videoNote: 'Practical call scripts and what to say to get a reduction.',
+    },
   ],
   urgent: [
-    "Cut your 3 biggest discretionary spends starting this week, not next week.",
-    "Cook at home at least 4 nights this week — it adds up faster than most people realise.",
-    "Set up an automatic transfer to savings the day you get paid, before you can spend it.",
-    "Negotiate your biggest bills — internet, insurance, subscriptions — many providers will reduce if you call and ask to cancel.",
-    "Switch to cash or a prepaid card for discretionary spending this week — physical money is harder to part with.",
-    "Use the 24-hour rule: wait one full day before any non-essential purchase over $20.",
+    {
+      title: 'Cut your 3 biggest discretionary spends',
+      description: 'Cut your 3 biggest discretionary spends starting this week, not next week.',
+      videoTitle: 'How to Cut Your Budget Without Misery',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to cut your budget discretionary spending" on YouTube
+      videoNote: 'How to identify and reduce your biggest spending categories first.',
+    },
+    {
+      title: 'Cook at home 4+ nights this week',
+      description: 'Cook at home at least 4 nights this week — it adds up faster than most people realise.',
+      videoTitle: 'Budget Meal Planning for Beginners',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "budget meal planning beginners save money" on YouTube
+      videoNote: 'Simple weekly meal plans that cut food costs by $150–$300/month.',
+    },
+    {
+      title: 'Set up automatic savings on payday',
+      description: 'Set up an automatic transfer to savings the day you get paid, before you can spend it.',
+      videoTitle: 'Pay Yourself First — The Simple Savings Strategy',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "pay yourself first savings strategy how to" on YouTube
+      videoNote: 'Why automating savings on payday beats saving what\'s left over.',
+    },
+    {
+      title: 'Call to negotiate your biggest bills',
+      description: 'Negotiate your biggest bills — internet, insurance, subscriptions — many providers will reduce if you call and ask to cancel.',
+      videoTitle: 'How to Negotiate and Lower Your Monthly Bills',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to negotiate lower bills internet insurance" on YouTube
+      videoNote: 'Real examples of calls that reduced bills by 20–40%.',
+    },
+    {
+      title: 'Use cash or a prepaid card',
+      description: 'Switch to cash or a prepaid card for discretionary spending this week — physical money is harder to part with.',
+      videoTitle: 'Cash Envelope Budgeting Method Explained',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "cash envelope budgeting method explained" on YouTube
+      videoNote: 'How using physical cash creates natural spending limits.',
+    },
+    {
+      title: 'Apply the 24-hour rule',
+      description: 'Use the 24-hour rule: wait one full day before any non-essential purchase over $20.',
+      videoTitle: 'How to Stop Impulse Buying',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to stop impulse buying 24 hour rule" on YouTube
+      videoNote: 'Simple psychological techniques to reduce unplanned spending.',
+    },
   ],
   tight: [
-    "Review your subscriptions and cancel 2 you've forgotten about — they're almost certainly there.",
-    "Meal plan for the week — it typically cuts grocery bills by around 25% with minimal effort.",
-    "Redirect any windfalls (refund, bonus, gift) straight to savings before they disappear into spending.",
-    "Track your spending for 30 days — most people underestimate theirs by 20–30% before they actually look at the numbers.",
-    "Try a 7-day spending freeze on one category — dining, shopping, or entertainment — then transfer the savings.",
-    "If you get a raise, redirect at least half the increase to savings before you adjust your lifestyle.",
+    {
+      title: 'Cancel 2 forgotten subscriptions',
+      description: 'Review your subscriptions and cancel 2 you\'ve forgotten about — they\'re almost certainly there.',
+      videoTitle: 'How to Find and Cancel Hidden Subscriptions',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "find cancel hidden subscriptions bank statement" on YouTube
+      videoNote: 'Quick bank statement audit to find recurring charges you forgot about.',
+    },
+    {
+      title: 'Meal plan to cut grocery bills 25%',
+      description: 'Meal plan for the week — it typically cuts grocery bills by around 25% with minimal effort.',
+      videoTitle: 'Meal Planning on a Budget — Save $200/Month',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "meal planning budget save money groceries" on YouTube
+      videoNote: 'How a 20-minute Sunday plan cuts weekly food spend by a quarter.',
+    },
+    {
+      title: 'Redirect windfalls straight to savings',
+      description: 'Redirect any windfalls (refund, bonus, gift) straight to savings before they disappear into spending.',
+      videoTitle: 'What to Do With a Financial Windfall',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "what to do with financial windfall bonus tax refund" on YouTube
+      videoNote: 'Why windfall money vanishes without a plan and how to prevent it.',
+    },
+    {
+      title: 'Track your spending for 30 days',
+      description: 'Track your spending for 30 days — most people underestimate theirs by 20–30% before they actually look at the numbers.',
+      videoTitle: 'Best Free Budgeting Apps to Track Spending',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "best free budgeting apps track spending 2024" on YouTube
+      videoNote: 'Comparison of free apps that make 30-day tracking effortless.',
+    },
+    {
+      title: 'Try a 7-day spending freeze',
+      description: 'Try a 7-day spending freeze on one category — dining, shopping, or entertainment — then transfer the savings.',
+      videoTitle: 'No-Spend Challenge: How It Works and What to Expect',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "no spend challenge how to do it results" on YouTube
+      videoNote: 'A guide to setting up a focused spending freeze that actually works.',
+    },
+    {
+      title: 'Redirect raises before lifestyle creep',
+      description: 'If you get a raise, redirect at least half the increase to savings before you adjust your lifestyle.',
+      videoTitle: 'Lifestyle Inflation — How to Avoid It',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "lifestyle inflation how to avoid lifestyle creep" on YouTube
+      videoNote: 'Why raises often leave people no better off and how to break the cycle.',
+    },
   ],
   moderate: [
-    "Start investing — even $50 per month into a low-cost index fund compounds meaningfully over time.",
-    "Build a 3-month emergency fund if you haven't already, then put anything extra to work.",
-    "Audit your insurance policies — there's a good chance you're overpaying somewhere.",
-    "If you're not investing yet, the habit matters as much as the amount — $100/month builds discipline as much as it builds a balance.",
-    "Review your take-home pay vs. gross pay — you might be leaving tax deductions on the table.",
-    "Increase your savings rate by just 1% of income every time you get a raise — you won't notice, but it compounds.",
+    {
+      title: 'Start investing — even $50/month',
+      description: 'Start investing — even $50 per month into a low-cost index fund compounds meaningfully over time.',
+      videoTitle: 'How to Start Investing for Beginners (Step by Step)',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to start investing beginners step by step index fund" on YouTube
+      videoNote: 'Beginner-friendly guide to opening an account and making your first investment.',
+    },
+    {
+      title: 'Build a 3-month emergency fund',
+      description: 'Build a 3-month emergency fund if you haven\'t already, then put anything extra to work.',
+      videoTitle: 'How to Build an Emergency Fund Fast',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to build emergency fund fast 3 months" on YouTube
+      videoNote: 'Strategy for reaching the 3-month benchmark without overhauling your lifestyle.',
+    },
+    {
+      title: 'Audit your insurance policies',
+      description: 'Audit your insurance policies — there\'s a good chance you\'re overpaying somewhere.',
+      videoTitle: 'How to Lower Your Insurance Premiums',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to lower insurance premiums car home" on YouTube
+      videoNote: 'How to shop around and negotiate better rates across all your policies.',
+    },
+    {
+      title: 'Build the investing habit, not just the balance',
+      description: 'If you\'re not investing yet, the habit matters as much as the amount — $100/month builds discipline as much as it builds a balance.',
+      videoTitle: 'Dollar-Cost Averaging Explained Simply',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "dollar cost averaging explained simple beginner" on YouTube
+      videoNote: 'Why consistent small investments often beat trying to time the market.',
+    },
+    {
+      title: 'Check for overlooked tax deductions',
+      description: 'Review your take-home pay vs. gross pay — you might be leaving tax deductions on the table.',
+      videoTitle: 'How to Understand Your Paycheck and Save on Taxes',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to understand paycheck deductions taxes" on YouTube
+      videoNote: 'Common overlooked deductions that put real money back in your paycheck.',
+    },
+    {
+      title: 'Raise your savings rate with every raise',
+      description: 'Increase your savings rate by just 1% of income every time you get a raise — you won\'t notice, but it compounds.',
+      videoTitle: 'How to Save More Without Feeling the Difference',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to save more money without noticing savings rate" on YouTube
+      videoNote: 'The 1% rule for gradually increasing savings without lifestyle sacrifice.',
+    },
   ],
   strong: [
-    "Make sure your savings are in a high-yield account, not sitting in a basic checking account losing value.",
-    "Consider speaking to a financial advisor about deploying the excess more productively.",
-    "Help a friend calculate their runway — they probably need this more than you do right now.",
-    "With 12+ months of runway, you can afford calculated risks — negotiating a raise, switching jobs, or starting a side project.",
-    "Max out tax-advantaged accounts (401k, IRA, HSA) before holding more idle cash — tax savings are guaranteed returns.",
-    "Look for a fee-only financial advisor (not commission-based) — at this level, personalised advice pays for itself.",
+    {
+      title: 'Move savings to a high-yield account',
+      description: 'Make sure your savings are in a high-yield account, not sitting in a basic checking account losing value.',
+      videoTitle: 'Best High-Yield Savings Accounts Right Now',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "best high yield savings accounts right now 2024" on YouTube
+      videoNote: 'Current top accounts and what to look for when choosing.',
+    },
+    {
+      title: 'Deploy the surplus productively',
+      description: 'Consider speaking to a financial advisor about deploying the excess more productively.',
+      videoTitle: 'What to Do With Extra Money After Emergencies Are Covered',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "what to do with extra money after emergency fund investing" on YouTube
+      videoNote: 'The order of operations for putting surplus money to work.',
+    },
+    {
+      title: 'Help a friend know their number',
+      description: 'Help a friend calculate their runway — they probably need this more than you do right now.',
+      videoTitle: 'How to Talk to Friends and Family About Money',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to talk to friends about money finances" on YouTube
+      videoNote: 'How to bring up money without making it awkward.',
+    },
+    {
+      title: 'Take a calculated career or financial risk',
+      description: 'With 12+ months of runway, you can afford calculated risks — negotiating a raise, switching jobs, or starting a side project.',
+      videoTitle: 'How to Know When You\'re Ready to Take a Financial Risk',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to take calculated financial risk career salary" on YouTube
+      videoNote: 'A framework for evaluating when your cushion supports a bigger move.',
+    },
+    {
+      title: 'Max out tax-advantaged accounts',
+      description: 'Max out tax-advantaged accounts (401k, IRA, HSA) before holding more idle cash — tax savings are guaranteed returns.',
+      videoTitle: 'How to Max Out Your 401k, IRA, and HSA',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "how to max out 401k IRA HSA tax advantaged accounts" on YouTube
+      videoNote: 'Contribution limits and the order to prioritise each account type.',
+    },
+    {
+      title: 'Find a fee-only financial advisor',
+      description: 'Look for a fee-only financial advisor (not commission-based) — at this level, personalised advice pays for itself.',
+      videoTitle: 'Fee-Only vs Commission Financial Advisors — What\'s the Difference?',
+      videoUrl: 'https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID', // REPLACE: search "fee only vs commission financial advisor difference" on YouTube
+      videoNote: 'Why the fee structure matters and how to find an advisor who works for you.',
+    },
   ],
 };
 
@@ -282,6 +536,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       handleSubmit();
     }
+  });
+  document.getElementById('result-tips')?.addEventListener('click', e => {
+    const btn = e.target.closest('.tip-watch-btn');
+    if (!btn) return;
+    trackEvent('tip_video_clicked', {
+      tipTitle:   btn.dataset.tipTitle   || '',
+      videoTitle: btn.dataset.videoTitle || '',
+    });
   });
   // FAQ is static HTML — no renderFAQ() needed
 });
@@ -681,10 +943,15 @@ function renderResult(result, content) {
 
   // Tips
   if (tipsEl) {
-    tipsEl.innerHTML = (content.tips || [])
-      .slice(0, 3)
-      .map(tip => `<li>${escapeHTML(tip)}</li>`)
-      .join('');
+    const tipsToShow = (content.tips || []).slice(0, 3);
+    tipsEl.innerHTML = tipsToShow.map((tip, i) => buildTipCardHtml(tip, i)).join('');
+    const disclaimerEl = document.getElementById('tip-video-disclaimer');
+    if (disclaimerEl) {
+      const hasLiveVideos = tipsToShow.some(
+        t => t.videoUrl && !t.videoUrl.includes('REPLACE_WITH_VIDEO_ID')
+      );
+      disclaimerEl.style.display = hasLiveVideos ? '' : 'none';
+    }
   }
 
   // Show / hide blocks by mode
@@ -776,8 +1043,12 @@ function buildFullCopyText() {
   const roast      = roastEl && roastEl.closest('#roast-block')?.style.display !== 'none'
     ? roastEl.textContent
     : '';
-  const tips = [...document.querySelectorAll('#result-tips li')]
-    .map((li, i) => `${i + 1}. ${li.textContent}`)
+  const tips = [...document.querySelectorAll('#result-tips .tip-card')]
+    .map((li, i) => {
+      const title = li.querySelector('.tip-title')?.textContent?.trim() || '';
+      const desc  = li.querySelector('.tip-description')?.textContent?.trim() || '';
+      return `${i + 1}. ${title} — ${desc}`;
+    })
     .join('\n');
 
   const stats = result.stable
@@ -1379,6 +1650,71 @@ function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
     }
   }
   if (line) ctx.fillText(line, x, currentY);
+}
+
+/* ============================================================
+   YOUTUBE HELPERS
+   ============================================================ */
+
+/** Convert any YouTube URL format to a privacy-enhanced embed URL. Returns null for placeholders. */
+function getYouTubeEmbedUrl(url) {
+  if (!url || url.includes('REPLACE_WITH_VIDEO_ID')) return null;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? `https://www.youtube-nocookie.com/embed/${m[1]}` : null;
+}
+
+/** Build the HTML for one tip card (li element) with optional video section. */
+function buildTipCardHtml(tip, index) {
+  const videoUrl   = tip.videoUrl   || '';
+  const videoTitle = tip.videoTitle || '';
+  const embedUrl   = USE_EMBEDDED_TIP_VIDEOS ? getYouTubeEmbedUrl(videoUrl) : null;
+  const isPlaceholder = videoUrl.includes('REPLACE_WITH_VIDEO_ID');
+
+  let videoSection = '';
+  if (videoUrl && !isPlaceholder) {
+    const safeVideoUrl   = escapeHTML(videoUrl);
+    const safeVideoTitle = escapeHTML(videoTitle);
+    const safeTipTitle   = escapeHTML(tip.title || '');
+    const noteHtml = tip.videoNote
+      ? `<p class="tip-video-note">${escapeHTML(tip.videoNote)}</p>`
+      : '';
+
+    const mediaHtml = (USE_EMBEDDED_TIP_VIDEOS && embedUrl)
+      ? `<div class="tip-embed-wrap">
+           <iframe
+             src="${escapeHTML(embedUrl)}?rel=0&modestbranding=1"
+             title="${safeVideoTitle}"
+             loading="lazy"
+             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+             allowfullscreen
+           ></iframe>
+         </div>`
+      : `<a
+           class="tip-watch-btn"
+           href="${safeVideoUrl}"
+           target="_blank"
+           rel="noopener noreferrer"
+           data-tip-title="${safeTipTitle}"
+           data-video-title="${safeVideoTitle}"
+           aria-label="Watch: ${safeVideoTitle} (opens on YouTube)"
+         >&#9654; Watch short video</a>`;
+
+    videoSection = `<div class="tip-video-area">
+        <span class="tip-video-label">&#9654; Recommended video</span>
+        <p class="tip-video-title">${safeVideoTitle}</p>
+        ${noteHtml}
+        ${mediaHtml}
+      </div>`;
+  }
+
+  return `<li class="tip-card">
+    <div class="tip-card-header">
+      <span class="tip-number" aria-hidden="true">${index + 1}</span>
+      <strong class="tip-title">${escapeHTML(tip.title || '')}</strong>
+    </div>
+    <p class="tip-description">${escapeHTML(tip.description || '')}</p>
+    ${videoSection}
+  </li>`;
 }
 
 /* ============================================================
