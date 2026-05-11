@@ -52,42 +52,70 @@ const ROASTS = {
     "You're not burning savings — you're growing them. This calculator is no place for you. Yet here you are.",
     "Income covers spending. You opened a roast calculator for fun. That's a level of financial security most only dream about.",
     "Your savings aren't running out — they're running up. Disgusting. We love it for you.",
+    "Positive cash flow detected. This calculator is usually visited by people quietly panicking. You must have taken a wrong turn. A right one.",
+    "Your bank account grows while you sleep. This is technically not a problem. We just wanted you to know we noticed.",
+    "Income more than covers spending. The audacity. The discipline. The suspiciously healthy financial habits.",
+    "You came to a roast website and you don't even need roasting. That's power. Annoying, admirable power.",
   ],
   zero: [
     "Your savings account is not a runway; it's a welcome mat.",
     "Zero months of runway. You're not living paycheck to paycheck — you're living vibe to vibe.",
     "Your emergency fund has the life expectancy of a houseplant in a dark closet.",
     "Bold strategy: saving nothing and hoping for the best. Chaotic. Committed. Genuinely terrifying.",
+    "Zero savings. Your financial plan is essentially: something will come up. Bold. Reckless. Relatable.",
+    "The bank would like to remind you that their minimum balance exceeds your balance.",
+    "You have no financial cushion. Every unexpected expense is a villain origin story.",
+    "Living with no savings takes a special kind of optimism. Or avoidance. Either way — here we are.",
   ],
   critical: [
     "Your savings won't survive the month. That's not a runway — it's a very short hallway with the exit blocked.",
     "Less than a month of runway. Your financial safety net is more of a financial sticky note.",
     "Your savings account has the life expectancy of a phone battery at 2%. And you're nowhere near a charger.",
     "Weeks, not months. This is the universe's very direct way of saying the changes start today, not next Monday.",
+    "Your runway is measured in days. That's not a financial plan — that's a countdown timer.",
+    "You're not living paycheck to paycheck. You're living check to check to mild panic.",
+    "One unexpected bill away from a very uncomfortable conversation with yourself. That's not a place — it's a feeling.",
+    "Your financial safety net is made of good intentions and best-case scenarios. Time for an upgrade.",
   ],
   urgent: [
     "Your savings are giving 'I'll figure it out' energy. The deadline for figuring it out is extremely close.",
     "You're not broke, but your budget is sending smoke signals.",
     "1 to 3 months of runway. That's enough time to fix this — if 'soon' means today, not eventually.",
     "Your savings have more optimism than runway. That's both a compliment and a structural warning.",
+    "1 to 3 months. You can fix this. But 'eventually' needs to become today, not next Monday.",
+    "You've got a window. Slim. Possibly closing. But a window.",
+    "This is the part of the movie where the music gets urgent and the protagonist starts making better decisions.",
+    "Enough time to course-correct. Not enough time to wait and see which way things go.",
   ],
   tight: [
     "Honestly, not bad. Your savings have more stability than most group chats.",
     "You're in the yellow zone. Not red, not green — just anxiously, responsibly yellow.",
     "A few months of runway sounds comfortable until you realise that's one unexpected bill away from drama.",
     "Your budget has breathing room, but it's the kind where you're still holding your breath a little.",
+    "3 to 6 months. Enough to breathe, not quite enough to nap.",
+    "You're doing okay. 'Okay' is underrated. 'Okay' pays rent.",
+    "Not a crisis, but not a comfort zone either. That's called yellow alert. Stay alert.",
+    "Your financial plan is... basically fine. Like a 74% on a test you didn't quite study for.",
   ],
   moderate: [
     "Your finances are stable-ish. Like a table with three legs — functional, but don't lean on it too hard.",
     "Almost a year of runway. You're doing okay. You've also definitely got a subscription you forgot about.",
     "You're financially okay — which in this economy genuinely deserves a round of applause.",
     "9 months of runway. Respectable. For someone who definitely orders delivery more than they admit to.",
+    "Almost a year of runway. Honestly? Most people would love your problems.",
+    "You're winning. Not yacht-winning. But real, solid, not-stressed-about-next-month winning.",
+    "6 to 12 months of runway. The quiet envy of every group chat that complains about money.",
+    "Your savings are respectable. You still overpay for something. But respectable.",
   ],
   strong: [
     "A year-plus of runway. You came here to feel smug, and honestly, you earned it.",
     "Your savings have real staying power. Your emergency fund is doing its job. Now you're just showing off.",
     "Over 12 months of runway. You don't need a roast. You need a yacht and an exit strategy.",
     "Your financial runway is an actual runway. Others are working with a driveway.",
+    "12+ months of runway. You're basically a small hedge fund with better snacks.",
+    "Your financial situation is so stable it's boring. We mean that as a compliment.",
+    "You could take three months off and still be fine. Don't. But the option existing is kind of the point.",
+    "Your savings have more stamina than most people's New Year's resolutions.",
   ],
 };
 
@@ -99,30 +127,44 @@ const COACH_MESSAGES = {
   stable: [
     "Your income covers your spending — your savings are protected and growing. Now the question is: are they working as hard as they could be?",
     "You've built the foundation. This is the moment to move from maintenance mode into growth mode.",
+    "Income positive means you're already winning the hardest part. The next level is deploying that surplus with intention.",
+    "Stable cash flow is the platform. Now build on it — higher savings rate, investments, or eliminating remaining debt are all strong next moves.",
   ],
   zero: [
     "The most important move right now is any income source you can activate quickly — even $200 extra per month buys you meaningful time and breathing room.",
     "Zero runway is a clear starting point. The goal this week is small: create any margin at all. Even a thin one changes everything.",
+    "Zero savings is a clear signal, not a verdict. The verdict comes from what you do next.",
+    "Start with one thing: cut the single largest non-essential expense you can find today. One change shifts momentum.",
   ],
   critical: [
     "Less than a month of runway means this week's decisions really matter. Focus on immediate income and cutting the single biggest expense you can touch.",
     "You've caught this at the right moment — there's still time to act. The goal right now is buying yourself another 30 days.",
+    "Critical runway calls for immediate action. Two priorities: any income source you can activate and any expense you can pause today.",
+    "There's still time to act — but less than a month means action this week, not next. Make the call, cancel the subscription, take the gig.",
   ],
   urgent: [
     "A few months of runway is tight but workable. Small, concrete cuts starting this week can meaningfully extend your timeline.",
     "You're in the yellow zone, not the red. A few deliberate changes now could add months to your runway without turning your life upside down.",
+    "Urgent but not emergency. That distinction matters: you have time to make real changes, not just desperate ones.",
+    "Three months is enough time for today's decisions to meaningfully change your trajectory. Use the time you have.",
   ],
   tight: [
     "3 to 6 months is a functional buffer — use this breathing room to push toward 6 months, not to relax.",
     "You have real options right now. That's exactly when to make changes — before your back is against the wall.",
+    "You're in the zone where small changes create disproportionate results. Even $150/month less in spending adds nearly 10% to your runway.",
+    "3 to 6 months is solid. The goal from here: push to 6+, then start thinking about growth, not just maintenance.",
   ],
   moderate: [
     "6 to 12 months of runway is solid. This is the time to optimise, not scramble — small wins here compound significantly.",
     "You're in a strong position relative to most. Now's the time to push toward 12 months and start making the surplus work for you.",
+    "You have real stability. This is the moment to shift from 'don't fall behind' to 'get ahead.'",
+    "6 to 12 months of runway means you can afford to be strategic instead of reactive. That's a position most people never reach.",
   ],
   strong: [
     "With 12+ months of runway, the question shifts from survival to optimisation. Are your savings working as hard as you did to accumulate them?",
     "You've built genuine financial resilience. Now's the time to think about investing, tax efficiency, and long-term goals.",
+    "The problem isn't your savings — it's making sure those savings are actually earning. Idle cash loses to inflation every month.",
+    "12+ months of runway is the foundation. What you build on it is the interesting question from here.",
   ],
 };
 
@@ -135,36 +177,57 @@ const TIPS = {
     "Move excess savings into a high-yield account — cash in a basic checking account loses value to inflation every month.",
     "Max your employer's pension or 401k match if available — it's literally free money.",
     "Consider speaking to a financial advisor about where to deploy the surplus more productively.",
+    "Automate a fixed percentage of income into investments — removing willpower from the equation makes it stick.",
+    "Review your insurance policies annually — most people are over-insured in some areas and under-insured in others.",
+    "If you don't have a will or basic estate documents, stable times are the right moment to sort it — not during a crisis.",
   ],
   zero: [
     "Call your bank today and pause every non-essential recurring charge — subscriptions, memberships, anything you don't use weekly.",
     "List every subscription you pay for and cancel anything you haven't opened in the last 30 days.",
     "Any income source helps right now: freelance work, gig work, or selling unused items online can buy you meaningful extra time.",
+    "Make a list of everything you own that has resale value — electronics, furniture, gear — and consider what you can part with.",
+    "Look into community resources: food banks, local assistance programs, and hardship grants exist for exactly this situation.",
+    "Turn any skill you have into even one paid hour this week — cooking, writing, fixing things, teaching — start small.",
   ],
   critical: [
     "Pause every non-essential direct debit and subscription — even small recurring charges add up fast.",
     "Look into gig or freelance income immediately: even $200 extra per month changes your runway meaningfully.",
-    "Contact any service providers about hardship options — many will defer or reduce payments if you ask.",
+    "Contact any service providers about hardship options — many will defer or reduce payments if you ask before you miss one.",
+    "Review your last 30 days of spending and cut everything that isn't shelter, food, or essential transport.",
+    "Same-day gig platforms can generate cash within 24 hours of signing up — delivery, tasks, and local services are worth exploring.",
+    "Negotiate your rent, utilities, or any large recurring bill — one successful call can buy you meaningful extra time.",
   ],
   urgent: [
     "Cut your 3 biggest discretionary spends starting this week, not next week.",
     "Cook at home at least 4 nights this week — it adds up faster than most people realise.",
     "Set up an automatic transfer to savings the day you get paid, before you can spend it.",
+    "Negotiate your biggest bills — internet, insurance, subscriptions — many providers will reduce if you call and ask to cancel.",
+    "Switch to cash or a prepaid card for discretionary spending this week — physical money is harder to part with.",
+    "Use the 24-hour rule: wait one full day before any non-essential purchase over $20.",
   ],
   tight: [
     "Review your subscriptions and cancel 2 you've forgotten about — they're almost certainly there.",
     "Meal plan for the week — it typically cuts grocery bills by around 25% with minimal effort.",
     "Redirect any windfalls (refund, bonus, gift) straight to savings before they disappear into spending.",
+    "Track your spending for 30 days — most people underestimate theirs by 20–30% before they actually look at the numbers.",
+    "Try a 7-day spending freeze on one category — dining, shopping, or entertainment — then transfer the savings.",
+    "If you get a raise, redirect at least half the increase to savings before you adjust your lifestyle.",
   ],
   moderate: [
     "Start investing — even $50 per month into a low-cost index fund compounds meaningfully over time.",
     "Build a 3-month emergency fund if you haven't already, then put anything extra to work.",
     "Audit your insurance policies — there's a good chance you're overpaying somewhere.",
+    "If you're not investing yet, the habit matters as much as the amount — $100/month builds discipline as much as it builds a balance.",
+    "Review your take-home pay vs. gross pay — you might be leaving tax deductions on the table.",
+    "Increase your savings rate by just 1% of income every time you get a raise — you won't notice, but it compounds.",
   ],
   strong: [
     "Make sure your savings are in a high-yield account, not sitting in a basic checking account losing value.",
     "Consider speaking to a financial advisor about deploying the excess more productively.",
     "Help a friend calculate their runway — they probably need this more than you do right now.",
+    "With 12+ months of runway, you can afford calculated risks — negotiating a raise, switching jobs, or starting a side project.",
+    "Max out tax-advantaged accounts (401k, IRA, HSA) before holding more idle cash — tax savings are guaranteed returns.",
+    "Look for a fee-only financial advisor (not commission-based) — at this level, personalised advice pays for itself.",
   ],
 };
 
@@ -215,6 +278,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initModeToggle();
   initForm();
   initInputFormatting();
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      handleSubmit();
+    }
+  });
   // FAQ is static HTML — no renderFAQ() needed
 });
 
@@ -255,6 +323,18 @@ function initInputFormatting() {
       if (!hasStarted) {
         hasStarted = true;
         Analytics.track('calculator_started', { mode: currentMode });
+      }
+    });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        const order = ['savings', 'spending', 'income'];
+        const idx   = order.indexOf(id);
+        if (idx < order.length - 1) {
+          document.getElementById(order[idx + 1])?.focus();
+        } else {
+          handleSubmit();
+        }
       }
     });
   });
@@ -354,6 +434,16 @@ function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function pickRandomTips(tierId, count = 3) {
+  const pool   = [...(TIPS[tierId] || TIPS.moderate)];
+  const picked = [];
+  while (picked.length < count && pool.length > 0) {
+    const i = Math.floor(Math.random() * pool.length);
+    picked.push(pool.splice(i, 1)[0]);
+  }
+  return picked;
+}
+
 /* ============================================================
    FORM
    ============================================================ */
@@ -440,7 +530,7 @@ function buildStaticContent(result, mode) {
     nickname:     NICKNAMES[tierId]                || NICKNAMES.moderate,
     roast:        randomFrom(ROASTS[tierId]        || ROASTS.moderate),
     coachMessage: randomFrom(COACH_MESSAGES[tierId]|| COACH_MESSAGES.moderate),
-    tips:         TIPS[tierId]                     || TIPS.moderate,
+    tips:         pickRandomTips(tierId),
   };
 }
 
@@ -806,6 +896,7 @@ function resetForm() {
   if (projMilest)      projMilest.style.display      = 'none';
 
   document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => document.getElementById('savings')?.focus(), 350);
 }
 
 function writeToClipboard(text, onSuccess) {
